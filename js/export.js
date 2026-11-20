@@ -1,0 +1,110 @@
+/* ElectroSim – PDF export (drawing sheets + styled parts list). Uses the bundled jsPDF in js/vendor. */
+'use strict';
+const SVGNS='http://www.w3.org/2000/svg';
+const pdfTxt=s=>String(s==null?'':s).replace(/Ω/g,'ohm').replace(/[−–—]/g,'-').replace(/[’‘]/g,"'").replace(/[“”]/g,'"').replace(/€/g,'EUR').replace(/₹/g,'INR').replace(/θ/g,'theta').replace(/⇒/g,'->').replace(/…/g,'...').replace(/[^\x20-\x7E\u00A0-\u00FF]/g,'?');
+const money=v=>{const c=S.tb.cur==null?'$':String(S.tb.cur).trim();return(c?c+' ':'')+(+v).toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2})};
+const natCmp=(a,b)=>String(a).localeCompare(String(b),undefined,{numeric:true});
+
+/* inner markup (HTML-ish) -> well-formed standalone SVG string */
+function buildSVG(inner,vb,wpx,hpx){const s=document.createElementNS(SVGNS,'svg');
+ s.setAttribute('width',wpx);s.setAttribute('height',hpx);s.setAttribute('viewBox',vb.join(' '));s.setAttribute('class','exp');s.setAttribute('style',PAPERVARS);
+ s.innerHTML=`<style>${SVGCSS}</style>`+inner;return new XMLSerializer().serializeToString(s)}
+function rasterSVG(svg,w,h,type,bg){return new Promise((res,rej)=>{const url=URL.createObjectURL(new Blob([svg],{type:'image/svg+xml;charset=utf-8'})),img=new Image();
+ img.onload=()=>{const c=document.createElement('canvas');c.width=Math.round(w);c.height=Math.round(h);const x=c.getContext('2d');if(bg){x.fillStyle=bg;x.fillRect(0,0,c.width,c.height)}x.drawImage(img,0,0,c.width,c.height);URL.revokeObjectURL(url);res(c.toDataURL(type||'image/png',.95))};
+ img.onerror=()=>{URL.revokeObjectURL(url);rej(new Error('Could not render the drawing for PDF'))};img.src=url})}
+const loadImg=u=>new Promise(r=>{const i=new Image();i.onload=()=>r(i);i.onerror=()=>r(null);i.src=u});
+
+async function sheetImage(pi){const[W,H]=paperPx(),k=Math.min(3,3600/W);
+ return rasterSVG(buildSVG(sheetMarkup(pi,true)+pageMarkup(S.pages[pi].id,false),[0,0,W,H],W*k,H*k),W*k,H*k,'image/jpeg','#fff')}
+const iconCache={};
+async function iconImage(type){if(iconCache[type])return iconCache[type];const{vb,inner}=iconParts(type),sc=6;
+ const url=await rasterSVG(buildSVG(inner,vb,vb[2]*sc,vb[3]*sc),vb[2]*sc,vb[3]*sc,'image/png');return(iconCache[type]={url,w:vb[2],h:vb[3]})}
+
+/* ===== parts list data ===== */
+function specOf(c){const d=D[c.type],o=[],P=d.pv?d.pv(c):d.p;for(const k in P){const[,u0,nm]=P[k],u=typeof u0==='function'?u0(c):u0;if(u==='txt'||k==='vw')continue;o.push(`${nm}: ${c.p[k]}${u?' '+u:''}`)}return o}
+function bomRows(){const map=new Map(),order=[...new Set(Object.values(D).map(d=>d.cat))];
+ S.comps.forEach(c=>{const d=D[c.type];if(d.bom===0)return;const key=[c.type,JSON.stringify(c.p,(k,v)=>k==='vw'?undefined:v),c.mf||'',c.md||'',c.pn||'',c.pr==null?'':c.pr].join('|');let r=map.get(key);
+  if(!r){r={type:c.type,cat:d.cat,ds:d.nv?d.nv(c):d.ds,spec:specOf(c),mf:c.mf||'',md:c.md||'',pn:c.pn||'',pr:c.pr==null||c.pr===''?null:+c.pr,labels:[],pages:new Set()};map.set(key,r)}r.labels.push(c.label);r.pages.add(pnum(c.pg))});
+ return[...map.values()].sort((a,b)=>order.indexOf(a.cat)-order.indexOf(b.cat)||natCmp(a.ds,b.ds)).map(r=>{r.labels.sort(natCmp);return r})}
+
+/* ===== frame for parts-list pages ===== */
+function pdfFrame(doc,pw,ph){doc.setDrawColor(16,32,47);doc.setLineWidth(.6);doc.rect(10,10,pw-20,ph-20,'S')}
+
+/* ===== parts list ===== */
+async function drawBOM(doc,pw,ph,needAdd,prog){
+ const rows=bomRows(),total=rows.reduce((a,r)=>a+r.labels.length,0),m=10;
+ const left=m+5,right=pw-m-5,top=m+5,bottom=ph-m-9,tw=right-left;
+ const W0=[['Item',9,'c'],['Symbol',19,'c'],['Qty',9,'c'],['Designation',27],['Description',40],['Technical data',38],['Brand',22],['Model',24],['Part no.',24],['Unit price',20,'r'],['Total',23,'r'],['Sheet',10,'c']],sum=W0.reduce((a,c)=>a+c[1],0),kx=tw/sum;
+ const cols=[];let cx=left;W0.forEach(c=>{cols.push({h:c[0],w:c[1]*kx,x:cx,al:c[2]||'l'});cx+=c[1]*kx});
+ for(const r of rows)r.icon=await iconImage(r.type);
+ /* measure and paginate */
+ const LH=3.3,items=[];let lastCat=null,n=0;
+ doc.setFont('helvetica','normal');doc.setFontSize(7.6);
+ for(const r of rows){if(r.cat!==lastCat){items.push({k:'g',cat:r.cat,h:6.5});lastCat=r.cat}
+  n++;const w=i=>cols[i].w-3;
+  r.l=[doc.splitTextToSize(pdfTxt(r.labels.join(', ')),w(3)),doc.splitTextToSize(pdfTxt(r.ds),w(4)),r.spec.flatMap(s=>doc.splitTextToSize(pdfTxt(s),w(5))),doc.splitTextToSize(pdfTxt(r.mf||'-'),w(6)),doc.splitTextToSize(pdfTxt(r.md||'-'),w(7)),doc.splitTextToSize(pdfTxt(r.pn||'-'),w(8))];
+  items.push({k:'r',r,n,h:Math.max(11.5,Math.max(...r.l.map(a=>a.length))*LH+4.6)})}
+ items.push({k:'t',h:9});
+ const y0=top+17+4+7.5,pages=[[]];let y=y0;
+ items.forEach((it,i)=>{const need=it.h+(it.k==='g'?items[i+1].h:0);if(y+need>bottom&&pages[pages.length-1].length){pages.push([]);y=y0}pages[pages.length-1].push(it);y+=it.h});
+ const NP=pages.length,grand=rows.reduce((a,r)=>a+(r.pr==null?0:r.pr*r.labels.length),0),unpriced=rows.some(r=>r.pr==null);
+ for(let pi=0;pi<NP;pi++){prog&&prog(`Building parts list ${pi+1} of ${NP}…`);
+  if(needAdd)doc.addPage([pw,ph],'landscape');needAdd=true;
+  pdfFrame(doc,pw,ph);
+  /* header band */
+  doc.setFillColor(15,42,67);doc.rect(left,top,tw,17,'F');doc.setFillColor(24,160,150);doc.rect(left,top,2.4,17,'F');
+  doc.setFont('helvetica','bold');doc.setFontSize(16);doc.setTextColor(255,255,255);doc.text('Parts list',left+7,top+8.6);
+  doc.setFont('helvetica','normal');doc.setFontSize(8);doc.setTextColor(170,200,225);doc.text(pdfTxt([S.tb.project,S.tb.dwgNo].filter(Boolean).join('  |  ')||'Untitled project'),left+7,top+13.6);
+  doc.setFontSize(8);doc.setTextColor(255,255,255);doc.text(pdfTxt(`Rev. ${S.tb.rev||'-'}   ${S.tb.date||''}`),right-4,top+7,{align:'right'});
+  doc.setTextColor(170,200,225);doc.text(`${total} components  |  ${rows.length} line items  |  ${S.pages.length} sheet${S.pages.length>1?'s':''}`,right-4,top+13.2,{align:'right'});
+  /* table header */
+  let yy=top+21;doc.setFillColor(29,68,104);doc.rect(left,yy,tw,7.5,'F');doc.setFont('helvetica','bold');doc.setFontSize(7.2);doc.setTextColor(255,255,255);
+  cols.forEach(c=>{const tx=c.al==='c'?c.x+c.w/2:c.al==='r'?c.x+c.w-1.8:c.x+1.8;doc.text(c.h,tx,yy+4.9,{align:c.al==='c'?'center':c.al==='r'?'right':'left'})});
+  yy+=7.5;let z=0;
+  for(const it of pages[pi]){
+   if(it.k==='g'){doc.setFillColor(222,232,241);doc.rect(left,yy,tw,it.h,'F');doc.setFillColor(24,160,150);doc.rect(left,yy,1.2,it.h,'F');
+    doc.setFont('helvetica','bold');doc.setFontSize(7.4);doc.setTextColor(15,42,67);doc.text(pdfTxt(it.cat),left+4,yy+it.h/2+1.2);z=0}
+   else if(it.k==='t'){doc.setFillColor(15,42,67);doc.rect(left,yy,tw,it.h,'F');doc.setFont('helvetica','bold');doc.setFontSize(8.5);doc.setTextColor(255,255,255);
+    doc.text('Total components',cols[3].x+1.8,yy+it.h/2+1.4);doc.text(String(total),cols[2].x+cols[2].w/2,yy+it.h/2+1.4,{align:'center'});
+    if(grand>0){const t=pdfTxt(money(grand)),c=cols[10];let z2=8.5;doc.setFontSize(z2);while(z2>5&&doc.getTextWidth(t)>c.w-3){z2-=.3;doc.setFontSize(z2)}doc.text(t,c.x+c.w-1.8,yy+it.h/2+1.4,{align:'right'});doc.setFontSize(8.5);doc.text('Total cost',cols[9].x+cols[9].w-1.8,yy+it.h/2+1.4,{align:'right'})}}
+   else{const r=it.r;if(z++%2){doc.setFillColor(244,247,250);doc.rect(left,yy,tw,it.h,'F')}
+    doc.setDrawColor(213,221,230);doc.setLineWidth(.15);doc.line(left,yy+it.h,right,yy+it.h);
+    cols.slice(1).forEach(c=>doc.line(c.x,yy,c.x,yy+it.h));
+    const tb=(lines,i,font,size,col,al)=>{doc.setFont('helvetica',font);doc.setFontSize(size);doc.setTextColor(col[0],col[1],col[2]);const c=cols[i],yb=yy+(it.h-lines.length*LH)/2+LH*.76;
+     doc.text(lines,al==='c'?c.x+c.w/2:c.x+1.8,yb,{align:al==='c'?'center':'left',lineHeightFactor:LH/(size*.3528)})};
+    tb([String(it.n)],0,'normal',7.5,[110,128,146],'c');
+    const ic=r.icon,k=Math.min((cols[1].w-5)/ic.w,(it.h-3)/ic.h),iw=ic.w*k,ih=ic.h*k;doc.addImage(ic.url,'PNG',cols[1].x+(cols[1].w-iw)/2,yy+(it.h-ih)/2,iw,ih);
+    tb([String(r.labels.length)],2,'bold',9.5,[15,42,67],'c');
+    tb(r.l[0],3,'bold',7.6,[15,42,67]);tb(r.l[1],4,'normal',7.6,[23,40,58]);tb(r.l[2],5,'normal',7,[75,95,115]);
+    tb(r.l[3],6,'normal',7.4,r.mf?[23,40,58]:[170,180,190]);tb(r.l[4],7,'normal',7.4,r.md?[23,40,58]:[170,180,190]);tb(r.l[5],8,'normal',7.4,r.pn?[23,40,58]:[170,180,190]);
+    const pc=(txt,i,font,col)=>{const c=cols[i];let z2=7.4;doc.setFont('helvetica',font);doc.setFontSize(z2);while(z2>5&&doc.getTextWidth(txt)>c.w-3){z2-=.3;doc.setFontSize(z2)}doc.setTextColor(col[0],col[1],col[2]);doc.text(txt,c.x+c.w-1.8,yy+(it.h-LH)/2+LH*.76,{align:'right'})};
+    pc(r.pr==null?'-':pdfTxt(money(r.pr)),9,'normal',r.pr==null?[170,180,190]:[23,40,58]);pc(r.pr==null?'-':pdfTxt(money(r.pr*r.labels.length)),10,'bold',r.pr==null?[170,180,190]:[15,42,67]);
+    tb([[...r.pages].sort((a,b)=>a-b).join(', ')],11,'normal',7.4,[75,95,115],'c')}
+   yy+=it.h}
+  /* column hairlines + outer edge of table body */
+  doc.setDrawColor(15,42,67);doc.setLineWidth(.3);doc.line(left,yy,right,yy);
+  doc.setFont('helvetica','normal');doc.setFontSize(6.5);doc.setTextColor(120,135,150);doc.text(`Generated with ElectroSim  |  page ${pi+1} of ${NP}`,left,ph-m-2.6);
+  if(pi===NP-1&&grand>0&&unpriced)doc.text('Total cost counts only the items that have a price',right,ph-m-2.6,{align:'right'});
+  }
+ return NP}
+
+async function exportPDF(opt,prog){
+ const J=window.jspdf&&window.jspdf.jsPDF;if(!J)throw new Error('PDF library (js/vendor/jspdf.umd.min.js) did not load');
+ const[Wp,Hp]=paperPx(),pw=Wp/U,ph=Hp/U,ori=pw>=ph?'landscape':'portrait',lw=Math.max(pw,ph),lh=Math.min(pw,ph);
+ const doc=opt.sheets?new J({orientation:ori,unit:'mm',format:[pw,ph],compress:true}):new J({orientation:'landscape',unit:'mm',format:[lw,lh],compress:true});let first=1;
+ const idx=opt.range==='cur'?[pidx()]:S.pages.map((_,i)=>i);
+ if(opt.sheets)for(const i of idx){prog&&prog(`Rendering sheet ${i+1} of ${S.pages.length}…`);
+  const url=await sheetImage(i);if(!first)doc.addPage([pw,ph],ori);first=0;doc.addImage(url,'JPEG',0,0,pw,ph,undefined,'FAST')}
+ if(opt.bom)await drawBOM(doc,lw,lh,!first,prog);
+ doc.setProperties({title:pdfTxt(S.tb.project||'ElectroSim drawing'),author:'',creator:'ElectroSim'});
+ return doc}
+
+/* ===== parts list as CSV (opens in Excel / Sheets): brand, model, part no., unit price, line total ===== */
+function bomCSV(){const rows=bomRows(),cell=v=>typeof v==='number'?String(Math.round(v*100)/100):'"'+String(v==null?'':v).replace(/"/g,'""')+'"',cur=String(S.tb.cur==null?'':S.tb.cur).trim(),out=[],pg=r=>[...r.pages].sort((a,b)=>a-b).join(' ');
+ out.push(['Item','Qty','Designation','Description','Technical data','Brand','Model','Part no.','Unit price'+(cur?' ('+cur+')':''),'Line total'+(cur?' ('+cur+')':''),'Sheet'].map(cell).join(','));
+ let grand=0,qty=0;rows.forEach((r,i)=>{const n=r.labels.length,lt=r.pr==null?null:r.pr*n;qty+=n;if(lt!=null)grand+=lt;
+  out.push([i+1,n,r.labels.join(' '),r.ds,r.spec.join('; '),r.mf,r.md,r.pn,r.pr==null?'':r.pr,lt==null?'':lt,pg(r)].map(cell).join(','))});
+ out.push(['',qty,'Total','','','','','','',grand>0?grand:'',''].map(cell).join(','));
+ return'\ufeff'+out.join('\r\n')}
+document.getElementById('bCsv').onclick=()=>{if(!S.comps.some(c=>D[c.type].bom!==0)){toast('No parts to list yet');menuClose();return}
+ const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([bomCSV()],{type:'text/csv;charset=utf-8'}));a.download=((S.tb.dwgNo||S.tb.project||'electrosim').replace(/[^\w\-. ]+/g,'_'))+'_parts_list.csv';a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000);menuClose()};

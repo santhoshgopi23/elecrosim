@@ -1,0 +1,248 @@
+{
+ "v": 3,
+ "pages": [
+  {
+   "id": 1,
+   "title": "t"
+  }
+ ],
+ "pg": 1,
+ "pid": 2,
+ "tb": {
+  "paper": "A3",
+  "orient": "L",
+  "frame": 1,
+  "project": "Remote I/O example",
+  "dwgNo": "",
+  "rev": "A",
+  "date": "2026-11-05"
+ },
+ "n": 300,
+ "w": [
+  {
+   "id": 100,
+   "a": "1.0",
+   "b": "2.0",
+   "col": ""
+  },
+  {
+   "id": 101,
+   "a": "1.1",
+   "b": "2.1",
+   "col": ""
+  },
+  {
+   "id": 102,
+   "a": "1.0",
+   "b": "3.0",
+   "col": ""
+  },
+  {
+   "id": 103,
+   "a": "1.1",
+   "b": "3.1",
+   "col": ""
+  },
+  {
+   "id": 104,
+   "a": "1.0",
+   "b": "4.0",
+   "col": ""
+  },
+  {
+   "id": 105,
+   "a": "4.1",
+   "b": "3.2",
+   "col": ""
+  },
+  {
+   "id": 106,
+   "a": "3.10",
+   "b": "1.0",
+   "col": ""
+  },
+  {
+   "id": 107,
+   "a": "3.6",
+   "b": "5.0",
+   "col": ""
+  },
+  {
+   "id": 108,
+   "a": "5.1",
+   "b": "1.1",
+   "col": ""
+  }
+ ],
+ "sh": [
+  {
+   "id": 201,
+   "k": "text",
+   "pg": 1,
+   "all": 0,
+   "col": "",
+   "wd": 2,
+   "ds": "",
+   "x": 60,
+   "y": 80,
+   "text": "Example: Remote I/O module (expansion) for a PLC",
+   "size": 18,
+   "bold": 0,
+   "it": 0,
+   "al": "left",
+   "rot": 0
+  },
+  {
+   "id": 202,
+   "k": "text",
+   "pg": 1,
+   "all": 0,
+   "col": "",
+   "wd": 2,
+   "ds": "",
+   "x": 60,
+   "y": 98,
+   "text": "RIO1 is linked to PLC1 (Properties > Master PLC, node 1). Its channels are I2.0-I3.7 / Q2.0-Q3.7 in the PLC ladder.",
+   "size": 12,
+   "bold": 0,
+   "it": 0,
+   "al": "left",
+   "rot": 0
+  },
+  {
+   "id": 203,
+   "k": "text",
+   "pg": 1,
+   "all": 0,
+   "col": "",
+   "wd": 2,
+   "ds": "",
+   "x": 60,
+   "y": 116,
+   "text": "Press RUN, then click switch S1: input I2.0 on the remote module turns output Q2.0 (lamp L1) on the same module.",
+   "size": 12,
+   "bold": 0,
+   "it": 0,
+   "al": "left",
+   "rot": 0
+  },
+  {
+   "id": 204,
+   "k": "text",
+   "pg": 1,
+   "all": 0,
+   "col": "",
+   "wd": 2,
+   "ds": "",
+   "x": 60,
+   "y": 134,
+   "text": "Set PLC1 to STOP (click its badge): RIO1 goes OFFLINE and its outputs switch off. Try View > Wire numbers to hide the numbers.",
+   "size": 12,
+   "bold": 0,
+   "it": 0,
+   "al": "left",
+   "rot": 0
+  }
+ ],
+ "dw": {
+  "col": "",
+  "wd": 0,
+  "ds": ""
+ },
+ "c": [
+  {
+   "id": 1,
+   "type": "dc",
+   "x": 100,
+   "y": 300,
+   "rot": 0,
+   "label": "V1",
+   "p": {
+    "V": 24,
+    "Imax": 50
+   },
+   "s": {},
+   "pg": 1
+  },
+  {
+   "id": 2,
+   "type": "plc",
+   "x": 400,
+   "y": 300,
+   "rot": 0,
+   "label": "PLC1",
+   "p": {
+    "V": 24,
+    "mode": "RUN",
+    "nDI": 0,
+    "nDO": 0
+   },
+   "s": {},
+   "pg": 1,
+   "prog": {
+    "rungs": [
+     {
+      "t": "",
+      "cm": "",
+      "c": {
+       "k": "s",
+       "ch": [
+        {
+         "k": "no",
+         "a": "I2.0"
+        }
+       ]
+      },
+      "o": [
+       {
+        "k": "out",
+        "a": "Q2.0"
+       }
+      ]
+     }
+    ]
+   }
+  },
+  {
+   "id": 3,
+   "type": "rio",
+   "x": 700,
+   "y": 300,
+   "rot": 0,
+   "label": "RIO1",
+   "p": {
+    "V": 24,
+    "node": 1,
+    "nDI": 8,
+    "nDO": 8,
+    "plc": "Auto (first PLC)"
+   },
+   "s": {},
+   "pg": 1
+  },
+  {
+   "id": 4,
+   "type": "sw",
+   "x": 250,
+   "y": 150,
+   "rot": 0,
+   "label": "S1",
+   "p": {},
+   "s": {
+    "on": true
+   },
+   "pg": 1
+  },
+  {
+   "id": 5,
+   "type": "lamp",
+   "x": 900,
+   "y": 300,
+   "rot": 0,
+   "label": "L1",
+   "p": {},
+   "s": {},
+   "pg": 1
+  }
+ ]
+}

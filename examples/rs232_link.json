@@ -1,0 +1,304 @@
+{
+ "v": 3,
+ "pages": [
+  {
+   "id": 1,
+   "title": "t"
+  }
+ ],
+ "pg": 1,
+ "pid": 2,
+ "tb": {
+  "paper": "A3",
+  "orient": "L",
+  "frame": 1,
+  "project": "RS232 link example",
+  "dwgNo": "",
+  "rev": "A",
+  "date": "2026-11-14"
+ },
+ "n": 400,
+ "w": [
+  {
+   "id": 100,
+   "a": "1.0",
+   "b": "2.0",
+   "col": "",
+   "v": [
+    [
+     150,
+     240
+    ],
+    [
+     435,
+     240
+    ]
+   ]
+  },
+  {
+   "id": 101,
+   "a": "1.1",
+   "b": "2.1",
+   "col": "",
+   "v": [
+    [
+     100,
+     345
+    ],
+    [
+     100,
+     225
+    ],
+    [
+     465,
+     225
+    ]
+   ]
+  },
+  {
+   "id": 102,
+   "a": "2.0",
+   "b": "3.0",
+   "col": "",
+   "v": [
+    [
+     435.0,
+     240
+    ],
+    [
+     735.0,
+     240
+    ]
+   ]
+  },
+  {
+   "id": 103,
+   "a": "2.1",
+   "b": "3.1",
+   "col": "",
+   "v": [
+    [
+     465.0,
+     225
+    ],
+    [
+     765.0,
+     225
+    ]
+   ]
+  },
+  {
+   "id": 104,
+   "a": "2.2",
+   "b": "3.3",
+   "col": "",
+   "v": [
+    [
+     420.0,
+     375
+    ],
+    [
+     735.0,
+     375
+    ]
+   ]
+  },
+  {
+   "id": 105,
+   "a": "2.3",
+   "b": "3.2",
+   "col": "",
+   "v": [
+    [
+     435.0,
+     360
+    ],
+    [
+     720.0,
+     360
+    ]
+   ]
+  },
+  {
+   "id": 106,
+   "a": "2.4",
+   "b": "3.4",
+   "col": "",
+   "v": [
+    [
+     450.0,
+     390
+    ],
+    [
+     750.0,
+     390
+    ]
+   ]
+  },
+  {
+   "id": 107,
+   "a": "2.5",
+   "b": "3.6",
+   "col": "",
+   "v": [
+    [
+     465.0,
+     405
+    ],
+    [
+     780.0,
+     405
+    ]
+   ]
+  },
+  {
+   "id": 108,
+   "a": "2.6",
+   "b": "3.5",
+   "col": "",
+   "v": [
+    [
+     480.0,
+     420
+    ],
+    [
+     765.0,
+     420
+    ]
+   ]
+  }
+ ],
+ "sh": [
+  {
+   "id": 201,
+   "k": "text",
+   "pg": 1,
+   "all": 0,
+   "col": "",
+   "wd": 2,
+   "ds": "",
+   "x": 60,
+   "y": 60,
+   "text": "Example: RS232 link – two devices (SL1, SL2), 9600 baud 8E1, 5 m cable",
+   "size": 18,
+   "bold": 1,
+   "it": 0,
+   "al": "left",
+   "rot": 0
+  },
+  {
+   "id": 202,
+   "k": "text",
+   "pg": 1,
+   "all": 0,
+   "col": "",
+   "wd": 2,
+   "ds": "",
+   "x": 60,
+   "y": 78,
+   "text": "Press Run. Top trace = what the device sends, bottom trace = what arrives (RS232: −12 V = 1, +12 V = 0). Select a device and press Serial Viewer in Properties.",
+   "size": 12,
+   "bold": 0,
+   "it": 0,
+   "al": "left",
+   "rot": 0
+  },
+  {
+   "id": 203,
+   "k": "text",
+   "pg": 1,
+   "all": 0,
+   "col": "",
+   "wd": 2,
+   "ds": "",
+   "x": 60,
+   "y": 96,
+   "text": "Wiring: TX → RX and RX → TX (crossed), GND → GND, RTS → CTS and CTS → RTS (flow control RTS/CTS is ON).",
+   "size": 12,
+   "bold": 0,
+   "it": 0,
+   "al": "left",
+   "rot": 0
+  },
+  {
+   "id": 204,
+   "k": "text",
+   "pg": 1,
+   "all": 0,
+   "col": "",
+   "wd": 2,
+   "ds": "",
+   "x": 60,
+   "y": 114,
+   "text": "Break it: give SL2 19200 baud, or No parity, or 7 data bits (garbled data, PE / FE); wire TX to TX; remove the GND wire; make the cable 30 m; set RTS/CTS but remove the RTS wire.",
+   "size": 12,
+   "bold": 0,
+   "it": 0,
+   "al": "left",
+   "rot": 0
+  }
+ ],
+ "dw": {
+  "col": "",
+  "wd": 0,
+  "ds": ""
+ },
+ "c": [
+  {
+   "id": 1,
+   "type": "dc",
+   "x": 150,
+   "y": 300,
+   "rot": 0,
+   "label": "V1",
+   "p": {
+    "V": 24,
+    "Imax": 50
+   },
+   "s": {},
+   "pg": 1
+  },
+  {
+   "id": 2,
+   "type": "rs232",
+   "x": 450,
+   "y": 300,
+   "rot": 0,
+   "label": "SL1",
+   "p": {
+    "baud": "9600",
+    "db": "8",
+    "par": "Even",
+    "sb": "1",
+    "flow": "RTS/CTS",
+    "vl": "±12 V (RS232 standard)",
+    "len": 5,
+    "by": "41",
+    "V": 24
+   },
+   "s": {},
+   "pg": 1
+  },
+  {
+   "id": 3,
+   "type": "rs232",
+   "x": 750,
+   "y": 300,
+   "rot": 0,
+   "label": "SL2",
+   "p": {
+    "baud": "9600",
+    "db": "8",
+    "par": "Even",
+    "sb": "1",
+    "flow": "RTS/CTS",
+    "vl": "±12 V (RS232 standard)",
+    "len": 5,
+    "by": "48",
+    "V": 24
+   },
+   "s": {},
+   "pg": 1
+  }
+ ]
+}

@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0f2a43"><link rel="manifest" href="manifest.webmanifest"><link rel="icon" type="image/png" href="icons/icon-192.png"><link rel="apple-touch-icon" href="icons/apple-touch-icon.png"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="ElectroSim"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<title>ElectroSim – Electrical Schematic Editor &amp; Simulator</title>
+<meta name="description" content="Draw electrical and automation schematics and simulate them live in your browser.">
+<link rel="stylesheet" href="css/style.css"><link rel="stylesheet" href="css/ide.css"><link rel="stylesheet" href="css/polish.css"></head>
+<body>
+
+<div id="ribbon"><div id="rtop">
+ <button class="ic" id="tLib" title="Component library" aria-label="Component library"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" ><path d="M4 6h16M4 12h16M4 18h16"/></svg></button>
+ <b class="logo"><i class="mk"></i><span class="lbl">ElectroSim <small>Engineering</small></span></b>
+ <div id="rtabs" role="tablist"></div><span class="sp"></span>
+ <span id="stat">STOPPED</span>
+ <button class="ic run" id="bRun" title="Run simulation" aria-label="Run"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" ><path d="M7 4.5v15l12-7.5z" fill="currentColor"/></svg></button><button class="ic" id="bPause" title="Pause" aria-label="Pause"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" ><path d="M8 5v14M16 5v14"/></svg></button><button class="ic stop" id="bStop" title="Stop" aria-label="Stop"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" ><rect x="6" y="6" width="12" height="12" rx="1.5" fill="currentColor"/></svg></button>
+ <span class="vs"></span>
+ <button class="ic" id="bTB" title="Sheet setup (paper, frame, project)" aria-label="Sheet setup"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" ><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 15h18M14 15v5"/></svg></button><button class="ic pri" id="bPDF" title="Plot / print to PDF" aria-label="Print"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" ><path d="M7 9V3h10v6M7 17H5a2 2 0 0 1-2-2v-4a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v4a2 2 0 0 1-2 2h-2"/><rect x="7" y="14" width="10" height="7"/></svg></button>
+ <div class="mw"><button class="fbtn" id="bFile" title="File: open, save, save as" aria-label="File">File<span class="lbl"> ▾</span></button>
+  <div id="fmenu"><div id="fName"></div><button id="fOpen">Open…<kbd>Ctrl+O</kbd></button><button id="fSave">Save<kbd>Ctrl+S</kbd></button><button id="fSaveAs">Save As…<kbd>Ctrl+Shift+S</kbd></button></div></div>
+ <div class="mw"><button class="ic" id="bMore" title="More" aria-label="More"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" ><circle cx="5" cy="12" r="1.3" fill="currentColor"/><circle cx="12" cy="12" r="1.3" fill="currentColor"/><circle cx="19" cy="12" r="1.3" fill="currentColor"/></svg></button>
+  <div id="menu"><a id="mHome" href="index.html" role="menuitem">About ElectroSim</a><hr><button id="mRes">Show / hide results</button><button id="mPg">Show / hide sheet tabs</button><button id="mWn">Show / hide wire numbers</button><hr><button id="mInstall" data-pwa-install>Download app</button><button id="bSave">Save in browser</button><button id="bLoad">Load from browser</button><button id="bDown">Download project file</button><button id="bCsv">Download parts list (CSV)</button><button id="bOpen">Open project file…</button><button id="bReset">Clear all pages</button></div></div>
+ <button class="ic" id="tProps" title="Properties" aria-label="Properties"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" ><path d="M4 6h10M18 6h2M4 12h2M10 12h10M4 18h12M20 18h0"/><circle cx="16" cy="6" r="2"/><circle cx="8" cy="12" r="2"/><circle cx="18" cy="18" r="2"/></svg></button>
+</div><div id="rbody"></div></div>
+<main id="main">
+ <aside id="lib"><div class="in"><input id="q" type="search" placeholder="Search components" aria-label="Search components"><div id="libList"></div></div></aside>
+ <div id="cv">
+  <svg id="svg" xmlns="http://www.w3.org/2000/svg"></svg>
+  <button class="edge l" id="hL" title="Hide / show library">‹</button><button class="edge r" id="hR" title="Hide / show properties">›</button>
+<div id="thint"></div>
+  <div id="rest"><button id="rPg">▴ Sheet tabs</button><button id="rRes">▴ Results</button></div>
+  <div id="zc"><button id="zOut" aria-label="Zoom out">−</button><span id="zv">100%</span><button id="zIn" aria-label="Zoom in">+</button><button id="zFit" title="Fit page">Fit</button></div>
+  <div id="sbar"><button data-a="rot" class="nw nr">Rotate</button><button data-a="dup" class="nw">Copy</button><button data-a="edit">Edit</button><button data-a="help" class="hp" title="How this component works">Help</button><button data-a="del" class="dn">Delete</button></div>
+  <div id="cmd"><span class="cp">Command</span><input id="cmdIn" type="text" autocomplete="off" spellcheck="false" placeholder="Type a command – L line, C circle, T text, RO rotate, PLOT …" aria-label="Command line"><div id="cmdSug"></div></div>
+  <div id="sts"><span id="xy">X 0.0  Y 0.0 mm</span><button data-st="grid" title="Grid display (F7)">GRID</button><button data-st="snap" title="Snap to grid (F9)">SNAP</button><button data-st="os" title="Object snap – snap to end points, middle points, centres and terminals (F3)">OSNAP</button><button data-st="ortho" title="Ortho – straight lines only (F8)">ORTHO</button></div>
+  <div id="toast"></div>
+ </div>
+ <aside id="props"><div class="in" id="propsBody"></div></aside>
+</main>
+<nav id="pages"><div id="pgs"></div><button id="pgAdd" class="pri" title="Add a new page">＋ Page</button><button id="pgHide" class="ic sm" title="Hide sheet tabs" aria-label="Hide sheet tabs">▾</button></nav>
+<footer id="ft">
+ <div class="fh"><b>Simulation results</b><button id="fTog" class="ic sm" title="Hide results" aria-label="Hide results">▾</button></div>
+ <div class="fb"><div class="fl"><table><thead><tr><th>Component</th><th>Voltage</th><th>Current</th><th>Power</th><th>State</th><th>Pg</th></tr></thead><tbody id="tb"></tbody></table></div><div id="msgs"></div></div>
+</footer>
+
+<dialog id="dTB"><form method="dialog"><h2>Sheet setup</h2>
+ <div class="two"><label>Paper<select data-tb="paper"><option value="A5">A5</option><option value="A4">A4</option><option value="A3">A3</option><option value="A2">A2</option></select></label>
+  <label>Orientation<select data-tb="orient"><option value="L">Landscape</option><option value="P">Portrait</option></select></label></div>
+ <div class="two"><label class="ck"><input type="checkbox" id="tbFrame">Border &amp; zone markers</label></div>
+ <h3>Project (used on the parts list)</h3>
+ <div class="two"><label>Project<input data-tb="project"></label><label>Drawing no.<input data-tb="dwgNo"></label></div>
+ <div class="two"><label>Revision<input data-tb="rev"></label><label>Date<input data-tb="date"></label></div>
+ <div class="two"><label>Currency (for prices)<input data-tb="cur" maxlength="6" placeholder="$"></label></div>
+ <h3>Your own title block</h3>
+ <p class="mu">Press <b>Footer table</b> (Home tab → Annotation, or type <code>FOOTER</code>) to add an editable title-block table to every sheet. Or, for a fully custom one, use the <b>Line</b>, <b>Box</b>, <b>Text</b> and <b>Logo</b> tools in the ribbon at the top (Home tab) to draw yours, then tick <i>Show on every page</i> in the right-hand panel. In a text you can type <code>{page}</code>, <code>{pages}</code>, <code>{title}</code>, <code>{project}</code>, <code>{dwgno}</code>, <code>{rev}</code> or <code>{date}</code> and it is filled in on each sheet.</p>
+ <div class="act"><button class="pri" data-close>Done</button></div></form></dialog>
+
+<dialog id="dPG"><form method="dialog"><h2>Page settings</h2>
+ <label>Page title<input id="pgTitle"></label>
+ <div class="lr"><button type="button" id="pgL">◀ Move left</button><button type="button" id="pgR">Move right ▶</button></div>
+ <div class="act"><button type="button" id="pgDel" class="dn">Delete page</button><button class="pri" data-close>Done</button></div></form></dialog>
+
+<dialog id="dPDF"><form method="dialog"><h2>Plot / Print to PDF</h2>
+ <div class="plot"><div class="pf"><label>Paper size<select id="xPaper"><option value="A5">A5 (148 × 210 mm)</option><option value="A4">A4 (210 × 297 mm)</option><option value="A3">A3 (297 × 420 mm)</option><option value="A2">A2 (420 × 594 mm)</option></select></label>
+  <label>Drawing orientation<select id="xOrient"><option value="L">Landscape</option><option value="P">Portrait</option></select></label>
+  <label>Sheets to plot<select id="xRange"><option value="all">All sheets</option><option value="cur">Current sheet only</option></select></label></div>
+  <div class="pv"><div id="xPrev"><span></span></div><small id="xPrevT" class="mu"></small></div></div>
+ <label class="ck"><input type="checkbox" id="xSheets" checked>Drawing sheets (with your title block)</label>
+ <label class="ck"><input type="checkbox" id="xBom" checked>Parts list (styled table with symbols)</label>
+ <label class="ck"><input type="checkbox" id="xSym" checked>Draw devices as drawing symbols (professional look for submission)</label>
+ <p class="mu">The parts list is always printed landscape. Fill in brand, model, part number and unit price in each component’s properties (Material) to complete it. The parts list then shows the unit price, the line total and the total cost.</p>
+ <div id="xProg" class="mu" role="status"></div>
+ <div class="act"><button type="button" data-close>Close</button><button type="button" class="pri" id="xGo">Plot / Save PDF</button></div></form></dialog>
+<input type="file" id="fileIn" accept=".json,application/json" hidden><input type="file" id="imgIn" accept="image/*" hidden>
+<script src="js/vendor/jspdf.umd.min.js"></script>
+<script src="js/registry.js"></script><script src="js/parts2.js"></script><script src="js/plc.js"></script><script src="js/hmi.js"></script><script src="js/hmip.js"></script><script src="js/hmid.js"></script><script src="js/transmitters.js"></script><script src="js/valves.js"></script><script src="js/pneumatic.js"></script><script src="js/evalve.js"></script><script src="js/mfm.js"></script><script src="js/ups.js"></script><script src="js/solver.js"></script><script src="js/draw.js"></script><script src="js/footer.js"></script><script src="js/faultnav.js"></script><script src="js/panel.js"></script><script src="js/export.js"></script><script src="js/wiring.js"></script><script src="js/help.js"></script><script src="js/plhelp.js"></script><script src="js/pwa.js"></script><script src="js/xref.js"></script><script src="js/alt.js"></script><script src="js/vmr.js"></script><script src="js/vfd2.js"></script><script src="js/vfdhelp.js"></script><script src="js/vfdeasy.js"></script><script src="js/easyall.js"></script><script src="js/vfdprog.js"></script><script src="js/relays.js"></script><script src="js/motor1.js"></script><script src="js/poles.js"></script><script src="js/stepper.js"></script><script src="js/procsw.js"></script><script src="js/rs485.js"></script><script src="js/mbmap.js"></script><script src="js/modbus.js"></script><script src="js/rs232.js"></script><script src="js/ethernet.js"></script><script src="js/ethswitch.js"></script><script src="js/view.js"></script><script src="js/phys.js"></script><script src="js/wend.js"></script><script src="js/wnum.js"></script><script src="js/rio.js"></script><script src="js/sensors.js"></script><script src="js/app.js"></script><script src="js/blocks.js"></script><script src="js/file.js"></script><script src="js/autosave.js"></script><script src="js/loadcalc.js"></script><script src="js/multisel.js"></script><script src="js/easynav.js"></script><script src="js/sound.js"></script><script src="js/polish.js"></script><script src="js/realism.js"></script><script src="js/simopt.js"></script><script src="js/livevals.js"></script><script src="js/presets.js"></script>
+</body></html>

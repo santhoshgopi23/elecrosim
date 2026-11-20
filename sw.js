@@ -1,0 +1,12 @@
+/* ElectroSim service worker – caches the app so it installs and also works offline. */
+const CACHE='electrosim-v8.76-launch';
+const FILES=["./", "index.html", "app.html", "manifest.webmanifest", "css/style.css", "css/ide.css", "js/app.js", "js/blocks.js", "js/vfdprog.js", "js/vfdeasy.js", "js/easyall.js", "js/poles.js", "js/rs485.js", "js/mbmap.js", "js/modbus.js", "js/rs232.js", "js/ethernet.js", "js/ethswitch.js", "js/draw.js", "js/footer.js", "js/faultnav.js", "js/panel.js", "js/loadcalc.js", "js/multisel.js", "js/easynav.js", "js/sound.js", "js/polish.js", "js/simopt.js", "js/realism.js", "js/livevals.js", "js/presets.js", "css/polish.css", "js/evalve.js", "js/export.js", "js/help.js", "js/wiring.js", "js/stepper.js", "js/procsw.js", "js/hmi.js", "js/hmid.js", "js/hmip.js", "js/mfm.js", "js/ups.js", "js/xref.js", "js/alt.js", "js/vmr.js", "js/vfd2.js", "js/vfdhelp.js", "js/rio.js", "js/sensors.js", "js/relays.js", "js/view.js", "js/motor1.js", "js/phys.js", "js/file.js", "js/autosave.js", "js/wend.js", "js/wnum.js", "js/parts2.js", "js/plc.js", "js/plhelp.js", "js/pneumatic.js", "js/pwa.js", "js/registry.js", "js/solver.js", "js/transmitters.js", "js/valves.js", "js/vendor/jspdf.umd.min.js", "icons/apple-touch-icon.png", "icons/icon-192.png", "icons/icon-512.png", "icons/maskable-512.png", "examples/cda_sov_actuator.json", "examples/electric_modulating_valve.json", "examples/hmi_process_graphics.json", "examples/mfm_ct_operated.json", "examples/mfm_ct_pt_operated.json", "examples/ups_backup.json", "examples/rs485_bus.json", "examples/modbus_rtu.json", "examples/rs232_link.json", "examples/rs422_bus.json", "examples/ethernet_link.json", "examples/ethernet_switch.json"];
+self.addEventListener('install',e=>{e.waitUntil(caches.open(CACHE).then(c=>Promise.all(FILES.map(f=>c.add(f).catch(()=>0)))).then(()=>self.skipWaiting()))});
+self.addEventListener('activate',e=>{e.waitUntil(caches.keys().then(k=>Promise.all(k.filter(x=>x!==CACHE).map(x=>caches.delete(x)))).then(()=>self.clients.claim()))});
+self.addEventListener('fetch',e=>{
+ if(e.request.method!=='GET')return;
+ const u=new URL(e.request.url);if(u.origin!==location.origin)return;
+ /* network first (so updates arrive), cache as the offline fallback */
+ e.respondWith(fetch(e.request).then(r=>{if(r&&r.ok){const cp=r.clone();caches.open(CACHE).then(c=>c.put(e.request,cp))}return r})
+  .catch(()=>caches.match(e.request,{ignoreSearch:true}).then(m=>m||(e.request.mode==='navigate'?caches.match('app.html'):undefined))));
+});

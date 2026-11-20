@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0f2a43">
+<title>ElectroSim – Electrical Schematic Editor &amp; Simulator</title>
+<meta name="description" content="Draw electrical and industrial automation schematics, simulate them live, and plot submission-ready PDFs with a parts list. Free, in your browser, works offline.">
+<meta property="og:title" content="ElectroSim – Electrical Schematic Editor &amp; Simulator">
+<meta property="og:description" content="Draw, simulate and document electrical and automation circuits in your browser.">
+<meta property="og:type" content="website">
+<link rel="icon" type="image/png" href="icons/icon-192.png"><link rel="apple-touch-icon" href="icons/apple-touch-icon.png"><link rel="manifest" href="manifest.webmanifest">
+<style>
+:root{--bg:#f6f8fb;--pn:#fff;--pn2:#eef2f7;--bd:#d6dee8;--tx:#13263a;--mu:#587087;--ac:#0b7a75;--ac2:#0f2a43;--hero:#0f2a43;--hero2:#16405f}
+@media (prefers-color-scheme:dark){:root{--bg:#0b1219;--pn:#131e2a;--pn2:#1a2837;--bd:#2a3b4e;--tx:#e2ebf4;--mu:#93a9bd;--ac:#35c2b9;--ac2:#35c2b9;--hero:#0a1a2a;--hero2:#10304a}}
+*{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:68px}
+body{margin:0;background:var(--bg);color:var(--tx);font:16px/1.6 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;padding:env(safe-area-inset-top,0) 0 env(safe-area-inset-bottom,0)}
+a{color:inherit}.wrap{max-width:1120px;margin:0 auto;padding:0 22px}
+header.nav{position:sticky;top:0;z-index:10;background:color-mix(in srgb,var(--hero) 94%,transparent);backdrop-filter:blur(8px);color:#fff;border-bottom:1px solid rgba(255,255,255,.08)}
+.nav .wrap{display:flex;align-items:center;gap:22px;height:58px}
+.brand{display:flex;align-items:center;gap:10px;font-weight:700;font-size:17px;text-decoration:none;letter-spacing:.01em}.brand img{width:28px;height:28px;border-radius:7px}.brand small{font-weight:500;opacity:.65;font-size:12px;margin-left:2px}
+.nav nav{display:flex;gap:20px;margin-left:auto;font-size:14px}.nav nav a{text-decoration:none;opacity:.8}.nav nav a:hover{opacity:1}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:11px 20px;border-radius:8px;font-weight:600;font-size:15px;text-decoration:none;border:1px solid transparent;transition:transform .15s,background .15s}
+.btn:hover{transform:translateY(-1px)}.btn:focus-visible,a:focus-visible{outline:2px solid #5eead4;outline-offset:2px}
+.btn.pri{background:#14b8a6;color:#04201e}.btn.pri:hover{background:#2dd4bf}.btn.ghost{border-color:rgba(255,255,255,.3);color:#fff}.btn.ghost:hover{background:rgba(255,255,255,.08)}
+.nav .btn{padding:7px 14px;font-size:13px}
+.hero{background:radial-gradient(1000px 420px at 80% 0,var(--hero2),transparent 70%),var(--hero);color:#fff;padding:76px 0 84px}
+.hero .wrap{display:grid;grid-template-columns:1.05fr .95fr;gap:48px;align-items:center}
+.eyebrow{display:inline-block;font-size:12px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:#5eead4;margin-bottom:14px}
+h1{font-size:clamp(32px,4.6vw,52px);line-height:1.1;margin:0 0 18px;letter-spacing:-.02em}
+.hero p.lead{font-size:18px;color:#c4d4e3;max-width:520px;margin:0 0 28px}.cta{display:flex;gap:12px;flex-wrap:wrap}
+.meta{display:flex;gap:22px;flex-wrap:wrap;margin-top:28px;font-size:13px;color:#9fb6ca}.meta span:before{content:"✓ ";color:#5eead4}
+.shot{background:#0b1623;border:1px solid rgba(255,255,255,.12);border-radius:12px;box-shadow:0 24px 60px rgba(0,0,0,.45);overflow:hidden}
+.shot .bar{display:flex;gap:6px;padding:10px 12px;background:#12202f}.shot .bar i{width:10px;height:10px;border-radius:50%;background:#2f4357}
+.shot svg{display:block;width:100%;height:auto}
+section{padding:80px 0}section.alt{background:var(--pn2)}
+h2{font-size:clamp(26px,3.2vw,36px);line-height:1.2;margin:0 0 12px;letter-spacing:-.015em}
+.sub{color:var(--mu);max-width:640px;margin:0 0 44px;font-size:17px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:20px}
+.card{background:var(--pn);border:1px solid var(--bd);border-radius:12px;padding:24px}
+.card .ico{width:40px;height:40px;border-radius:10px;background:color-mix(in srgb,var(--ac) 14%,transparent);color:var(--ac);display:grid;place-items:center;margin-bottom:14px}
+.card h3{margin:0 0 6px;font-size:17px}.card p{margin:0;color:var(--mu);font-size:14.5px}
+.steps{counter-reset:s;display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:20px}
+.steps li{list-style:none;counter-increment:s;background:var(--pn);border:1px solid var(--bd);border-radius:12px;padding:22px}
+.steps li:before{content:counter(s);display:grid;place-items:center;width:30px;height:30px;border-radius:50%;background:var(--ac2);color:var(--bg);font-weight:700;font-size:14px;margin-bottom:12px}
+.steps{padding:0;margin:0}.steps b{display:block;margin-bottom:4px}.steps span{color:var(--mu);font-size:14.5px}
+.ex a{display:block;text-decoration:none;height:100%}.ex a:hover{border-color:var(--ac)}.ex .card{height:100%;transition:border-color .15s}.ex .tag{font-size:12px;font-weight:600;color:var(--ac);margin-top:12px;display:block}
+.cols{display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:start}
+.list{padding:0;margin:0;display:grid;gap:10px}.list li{list-style:none;padding-left:26px;position:relative;color:var(--mu)}.list li:before{content:"";position:absolute;left:0;top:.5em;width:12px;height:7px;border-left:2px solid var(--ac);border-bottom:2px solid var(--ac);transform:rotate(-45deg)}.list b{color:var(--tx)}
+.final{background:var(--hero);color:#fff;text-align:center;border-radius:16px;padding:56px 24px}.final h2{margin-bottom:10px}.final p{color:#c4d4e3;margin:0 0 24px}
+footer{padding:48px 0 28px;color:var(--mu);font-size:14px;background:var(--pn2);border-top:1px solid var(--bd)}.fgrid{display:grid;grid-template-columns:1.6fr 1fr 1fr;gap:32px}.fgrid p{margin:10px 0 0;max-width:340px}footer h4{margin:0 0 10px;color:var(--tx);font-size:13px;letter-spacing:.06em;text-transform:uppercase}footer a{display:block;text-decoration:none;padding:3px 0}footer a:hover{color:var(--ac);text-decoration:underline}footer .brand.fb{display:flex;color:var(--tx);padding:0}.fbot{grid-column:1/-1;border-top:1px solid var(--bd);padding-top:18px;margin-top:6px;font-size:13px}@media (max-width:860px){.fgrid{grid-template-columns:1fr 1fr}.fgrid>div:first-child{grid-column:1/-1}}
+@media (max-width:860px){.hero .wrap,.cols{grid-template-columns:1fr}.hero{padding:48px 0 56px}.nav nav a:not(.btn){display:none}section{padding:56px 0}}
+.pro{display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:start}
+.pro form{background:var(--pn);border:1px solid var(--bd);border-radius:12px;padding:24px;display:grid;gap:14px}
+.pro label{font-size:13px;font-weight:600;display:grid;gap:6px}
+.pro input,.pro select{font:inherit;padding:10px 12px;border-radius:8px;border:1px solid var(--bd);background:var(--bg);color:var(--tx)}
+.pro input:focus-visible,.pro select:focus-visible{outline:2px solid var(--ac);outline-offset:1px}
+.pro button{font:inherit;cursor:pointer;border:0}.pro .hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
+.pro .note{font-size:13px;color:var(--mu);margin:0}.pro .msg{font-size:14px;margin:0;min-height:1.4em}.pro .msg.ok{color:var(--ac)}.pro .msg.err{color:#d14343}
+@media (max-width:860px){.pro{grid-template-columns:1fr}}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
+</style></head>
+<body>
+<header class="nav"><div class="wrap">
+ <a class="brand" href="#top"><img src="icons/icon-192.png" alt="" width="28" height="28">ElectroSim<small>Engineering</small></a>
+ <nav><a href="#features">Features</a><a href="#how">How it works</a><a href="#examples">Examples</a><a href="#offline">Offline</a><a href="#pro">Pro</a><a class="btn pri" href="app.html">Launch app</a></nav>
+</div></header>
+
+<main id="top">
+<div class="hero"><div class="wrap">
+ <div>
+  <span class="eyebrow">Electrical &amp; automation design</span>
+  <h1>Draw it. Simulate it. Submit it.</h1>
+  <p class="lead">A schematic editor with a live circuit simulator. Build power and control circuits, watch them run, then plot a drawing set and parts list that is ready to hand over.</p>
+  <div class="cta"><a class="btn pri" href="app.html">Launch ElectroSim</a><a class="btn ghost" href="#examples">Open an example</a></div>
+  <div class="meta"><span>Runs in your browser</span><span>No account or install</span><span>Works offline</span></div>
+ </div>
+ <div class="shot" aria-hidden="true"><div class="bar"><i></i><i></i><i></i></div>
+  <svg viewBox="0 0 480 300" role="img" aria-label="Motor starter schematic preview"><rect width="480" height="300" fill="#0b1623"/>
+   <g stroke="#2a4663" stroke-width=".6"><path d="M0 60h480M0 120h480M0 180h480M0 240h480M80 0v300M160 0v300M240 0v300M320 0v300M400 0v300"/></g>
+   <g fill="none" stroke="#7fb4e6" stroke-width="2" stroke-linecap="round">
+    <path d="M60 30h360M120 30v50M200 30v50M280 30v50"/><rect x="104" y="80" width="32" height="30" rx="2"/><rect x="184" y="80" width="32" height="30" rx="2"/><rect x="264" y="80" width="32" height="30" rx="2"/>
+    <path d="M120 110v70M200 110v70M280 110v70"/><circle cx="200" cy="215" r="34" stroke="#5eead4"/>
+    <path d="M120 180h160M120 180v0M360 30v60M360 90l-12 18M360 108v30h0M360 138v90"/><path d="M340 140h40v26h-40z" stroke="#f5a623"/></g>
+   <g fill="#e2ebf4" font-family="system-ui,sans-serif" font-size="12"><text x="62" y="22">L1 L2 L3</text><text x="104" y="124" font-size="10">Q1</text><text x="184" y="124" font-size="10">K1</text><text x="264" y="124" font-size="10">F1</text><text x="192" y="220" font-size="18" fill="#5eead4" font-weight="700">M</text><text x="338" y="182" font-size="10" fill="#f5a623">S1</text></g>
+   <g fill="#14b8a6"><circle cx="120" cy="30" r="3.5"/><circle cx="200" cy="30" r="3.5"/><circle cx="280" cy="30" r="3.5"/></g>
+   <rect x="20" y="262" width="100" height="22" rx="11" fill="#12a36b"/><text x="70" y="277" text-anchor="middle" font-family="system-ui,sans-serif" font-size="11" font-weight="700" fill="#fff">RUNNING</text></svg>
+ </div>
+</div></div>
+
+<section id="features"><div class="wrap">
+ <h2>Everything for a control-panel drawing set</h2>
+ <p class="sub">One tool from the first wire to the final PDF. No separate CAD, simulator and spreadsheet.</p>
+ <div class="grid">
+  <div class="card"><div class="ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 18 10 6l4 8 3-5 3 9"/></svg></div><h3>Live simulation</h3><p>Voltage, current, power and state for every component, updated as the circuit runs. Faults and warnings appear in the results panel.</p></div>
+  <div class="card"><div class="ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 20 20 3M14 3h6v6M4 14v6h6"/></svg></div><h3>CAD-style drawing</h3><p>Line, circle, rectangle and dimension tools with object snap, ortho and a command line. Create your own blocks and reuse them.</p></div>
+  <div class="card"><div class="ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="12" rx="2"/><path d="M8 20h8M12 16v4"/></svg></div><h3>PLC, HMI and drives</h3><p>Program a PLC, build HMI process graphics, and configure programmable VFDs and remote I/O alongside the power circuit.</p></div>
+  <div class="card"><div class="ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 4 14h7l-1 8 9-12h-7z"/></svg></div><h3>Power and metering</h3><p>Multi-function meters with CT and PT ratios, voltage monitoring relays, UPS backup and motor models.</p></div>
+  <div class="card"><div class="ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12 3v3M12 18v3M3 12h3M18 12h3"/></svg></div><h3>Instruments and valves</h3><p>Transmitters, process switches, electric and pneumatic valves with solenoid panels and limit switches.</p></div>
+  <div class="card"><div class="ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9zM14 3v6h6M8 13h8M8 17h5"/></svg></div><h3>Submission-ready output</h3><p>Plot A5–A2 sheets with your own title block, cross-references, wire numbers and a priced parts list as PDF or CSV.</p></div>
+ </div>
+</div></section>
+
+<section id="how" class="alt"><div class="wrap">
+ <h2>From idea to drawing in four steps</h2><p class="sub">The workflow is the same whether it is a single relay or a full panel.</p>
+ <ol class="steps">
+  <li><b>Place</b><span>Drag components from the searchable library onto the sheet.</span></li>
+  <li><b>Wire</b><span>Connect terminals. Links and numbering keep multi-sheet projects traceable.</span></li>
+  <li><b>Run</b><span>Press play and operate switches, buttons and setpoints while it simulates.</span></li>
+  <li><b>Plot</b><span>Export sheets and the parts list to PDF, or save the project file.</span></li>
+ </ol>
+</div></section>
+
+<section id="examples"><div class="wrap">
+ <h2>Start from a working example</h2>
+ <p class="sub">Download a project file, then use <b>File → Open</b> inside the app.</p>
+ <div class="grid ex">
+  <a href="examples/vfd_programmable.json" download><div class="card"><h3>Programmable VFD</h3><p>Drive with a programmable parameter set and run/stop control.</p><span class="tag">Download .json</span></div></a>
+  <a href="examples/hmi_process_graphics.json" download><div class="card"><h3>HMI process graphics</h3><p>Pump, tank and valve with an animated operator screen.</p><span class="tag">Download .json</span></div></a>
+  <a href="examples/mfm_ct_pt_operated.json" download><div class="card"><h3>11 kV feeder metering</h3><p>CT and PT operated multi-function meter.</p><span class="tag">Download .json</span></div></a>
+  <a href="examples/ups_backup.json" download><div class="card"><h3>UPS backup</h3><p>Power circuit that transfers to battery on mains failure.</p><span class="tag">Download .json</span></div></a>
+  <a href="examples/cda_sov_actuator.json" download><div class="card"><h3>CDA → SOV → actuator</h3><p>Pneumatic panel with limit switch feedback.</p><span class="tag">Download .json</span></div></a>
+  <a href="examples/remote_io_expansion.json" download><div class="card"><h3>Remote I/O expansion</h3><p>Distributed I/O connected to a controller.</p><span class="tag">Download .json</span></div></a>
+
+  <a href="examples/rs485_bus.json" download><div class="card"><h3>RS485 bus (master + 2 slaves)</h3><p>See how two-wire industrial communication works, with a live oscilloscope on every node.</p><span class="tag">Download .json</span></div></a>
+  <a href="examples/modbus_rtu.json" download><div class="card"><h3>Modbus RTU (master + 2 slaves)</h3><p>Request and response frames byte by byte, with CRC, exceptions and a Frame Viewer.</p><span class="tag">Download .json</span></div></a>
+    <a href="examples/ethernet_switch.json" download><div class="card"><h3>Ethernet switch (3 PCs, MAC learning)</h3><p>An 8-port unmanaged switch: ARP broadcast flooding, MAC table, pings with round-trip time, subnets, duplicate IP and the broadcast storm of a loop.</p><span class="tag">Download .json</span></div></a>
+  <a href="examples/ethernet_link.json" download><div class="card"><h3>Ethernet link (PC – switch)</h3><p>CAT6 cable, two RJ45 plugs (T568B), link LED and speed. Change the colour order, cable type, length or noise and watch the link break.</p><span class="tag">Download .json</span></div></a>
+  <a href="examples/rs232_link.json" download><div class="card"><h3>RS232 link (two devices)</h3><p>TX / RX crossed, GND, RTS / CTS, ±12 V, 15 m limit. A Serial Viewer shows the start bit, data bits, parity and stop bit – and what garbled data looks like.</p><span class="tag">Download .json</span></div></a>
+  <a href="examples/rs422_bus.json" download><div class="card"><h3>RS422 bus (master + 2 slaves)</h3><p>Four-wire full duplex, one driver and several receivers over up to 1200 m, with termination and the same Serial Viewer.</p><span class="tag">Download .json</span></div></a>
+  <a href="examples/modbus_register_map.json" download><div class="card"><h3>Modbus register map and function codes</h3><p>Coils, discrete inputs, input and holding registers with names, scaling and units; try function codes 01–06, 15 and 16.</p><span class="tag">Download .json</span></div></a> </div>
+</div></section>
+
+<section id="offline" class="alt"><div class="wrap cols">
+ <div><h2>Your work stays with you</h2><p class="sub" style="margin-bottom:0">ElectroSim has no server. Projects live in a file you control or in your browser, and the app keeps working with no connection.</p></div>
+ <ul class="list">
+  <li><b>Installable.</b> Add it to your desktop or home screen and it opens in its own window.</li>
+  <li><b>Offline.</b> Everything is cached after the first visit.</li>
+  <li><b>Private.</b> Nothing is uploaded; drawings and parts lists are generated locally.</li>
+  <li><b>Portable.</b> Save and share projects as plain JSON files.</li>
+ </ul>
+</div></section>
+
+<section id="pro" class="alt"><div class="wrap pro">
+ <div>
+  <h2>ElectroSim Pro is coming</h2>
+  <p class="sub" style="margin-bottom:18px">Everything you can use today stays free. We are planning an optional Pro plan and want to build what people actually need. Join the list and tell us what it is worth to you.</p>
+  <ul class="list">
+   <li><b>Cloud projects.</b> Open your drawings on any device, with automatic backup.</li>
+   <li><b>Class and team licences.</b> One plan for a teacher, training centre or workshop.</li>
+   <li><b>Priority support</b> and early access to new components.</li>
+  </ul>
+  <p class="note" style="margin-top:14px">Planned features, not a promise. No payment is taken on this page.</p>
+ </div>
+ <form id="wl" novalidate>
+  <label>Email<input type="email" name="email" autocomplete="email" required maxlength="254" placeholder="you@example.com"></label>
+  <label>I am a<select name="role"><option value="">Choose…</option><option>Student</option><option>Teacher / trainer</option><option>Technician / engineer</option><option>Training centre / company</option><option>Hobbyist</option></select></label>
+  <label>A fair yearly price would be<select name="price"><option value="">Choose…</option><option>Under S$30</option><option>S$30 – 60</option><option>S$60 – 100</option><option>Over S$100</option><option>Not sure yet</option></select></label>
+  <div class="hp" aria-hidden="true"><label>Leave empty<input type="text" name="website" tabindex="-1" autocomplete="off"></label></div>
+  <button class="btn pri" type="submit">Join the Pro list</button>
+  <p class="msg" id="wlmsg" role="status" aria-live="polite"></p>
+  <p class="note">We use your email only to tell you about Pro. See <a href="legal.html#privacy">Privacy</a>.</p>
+ </form>
+</div></section>
+
+<section><div class="wrap"><div class="final"><h2>Open the editor and start drawing</h2><p>No sign-up. Works on desktop, tablet and phone.</p><a class="btn pri" href="app.html">Launch ElectroSim</a></div></div></section>
+</main>
+
+<footer><div class="wrap fgrid">
+ <div><a class="brand fb" href="#top"><img src="icons/icon-192.png" alt="" width="26" height="26">ElectroSim</a><p>Electrical and automation schematic editor with a live simulator. Runs in your browser, works offline.</p></div>
+ <div><h4>Product</h4><a href="#features">Features</a><a href="#how">How it works</a><a href="#examples">Examples</a><a href="app.html">Launch app</a></div>
+ <div><h4>Resources</h4><a href="README.md">Release notes</a><a href="LICENSE">Licence</a><a href="legal.html">Privacy &amp; Terms</a><a href="#offline">Install &amp; offline use</a></div>
+ <div class="fbot">© 2026 ElectroSim. All rights reserved.</div>
+</div></footer>
+<script>
+(function(){var f=document.getElementById('wl');if(!f)return;var m=document.getElementById('wlmsg'),b=f.querySelector('button');
+function say(t,c){m.textContent=t;m.className='msg '+(c||'')}
+f.addEventListener('submit',function(e){e.preventDefault();var d={email:f.email.value.trim(),role:f.role.value,price:f.price.value,website:f.website.value};
+if(!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(d.email)){say('Please enter a valid email address.','err');return}
+b.disabled=true;say('Sending…');
+fetch('/api/waitlist',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(d)})
+.then(function(r){return r.json().catch(function(){return{}}).then(function(j){return{ok:r.ok,j:j}})})
+.then(function(x){if(x.ok){say('Thank you. You are on the list.','ok');f.reset()}else{say(x.j.error||'Something went wrong. Please try again later.','err');b.disabled=false}})
+.catch(function(){say('Could not reach the server. Please try again later.','err');b.disabled=false})});})();
+</script>
+</body></html>

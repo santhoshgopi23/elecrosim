@@ -1,0 +1,367 @@
+{
+ "v": 3,
+ "pages": [
+  {
+   "id": 1,
+   "title": "t"
+  }
+ ],
+ "pg": 1,
+ "pid": 2,
+ "tb": {
+  "paper": "A3",
+  "orient": "L",
+  "frame": 1,
+  "project": "RS485 bus example",
+  "dwgNo": "",
+  "rev": "A",
+  "date": "2026-11-14"
+ },
+ "n": 400,
+ "w": [
+  {
+   "id": 100,
+   "a": "1.0",
+   "b": "2.0",
+   "col": "",
+   "v": [
+    [
+     150,
+     240
+    ],
+    [
+     435,
+     240
+    ]
+   ]
+  },
+  {
+   "id": 101,
+   "a": "1.1",
+   "b": "2.1",
+   "col": "",
+   "v": [
+    [
+     100,
+     345
+    ],
+    [
+     100,
+     225
+    ],
+    [
+     465,
+     225
+    ]
+   ]
+  },
+  {
+   "id": 102,
+   "a": "2.0",
+   "b": "3.0",
+   "col": "",
+   "v": [
+    [
+     435,
+     240
+    ],
+    [
+     735,
+     240
+    ]
+   ]
+  },
+  {
+   "id": 103,
+   "a": "3.0",
+   "b": "4.0",
+   "col": "",
+   "v": [
+    [
+     735,
+     240
+    ],
+    [
+     1035,
+     240
+    ]
+   ]
+  },
+  {
+   "id": 104,
+   "a": "2.1",
+   "b": "3.1",
+   "col": "",
+   "v": [
+    [
+     465,
+     225
+    ],
+    [
+     765,
+     225
+    ]
+   ]
+  },
+  {
+   "id": 105,
+   "a": "3.1",
+   "b": "4.1",
+   "col": "",
+   "v": [
+    [
+     765,
+     225
+    ],
+    [
+     1065,
+     225
+    ]
+   ]
+  },
+  {
+   "id": 106,
+   "a": "2.2",
+   "b": "3.2",
+   "col": "",
+   "v": [
+    [
+     435,
+     360
+    ],
+    [
+     735,
+     360
+    ]
+   ]
+  },
+  {
+   "id": 107,
+   "a": "2.3",
+   "b": "3.3",
+   "col": "",
+   "v": [
+    [
+     450,
+     375
+    ],
+    [
+     750,
+     375
+    ]
+   ]
+  },
+  {
+   "id": 108,
+   "a": "2.4",
+   "b": "3.4",
+   "col": "",
+   "v": [
+    [
+     465,
+     390
+    ],
+    [
+     765,
+     390
+    ]
+   ]
+  },
+  {
+   "id": 109,
+   "a": "3.2",
+   "b": "4.2",
+   "col": "",
+   "v": [
+    [
+     735,
+     360
+    ],
+    [
+     1035,
+     360
+    ]
+   ]
+  },
+  {
+   "id": 110,
+   "a": "3.3",
+   "b": "4.3",
+   "col": "",
+   "v": [
+    [
+     750,
+     375
+    ],
+    [
+     1050,
+     375
+    ]
+   ]
+  },
+  {
+   "id": 111,
+   "a": "3.4",
+   "b": "4.4",
+   "col": "",
+   "v": [
+    [
+     765,
+     390
+    ],
+    [
+     1065,
+     390
+    ]
+   ]
+  }
+ ],
+ "sh": [
+  {
+   "id": 201,
+   "k": "text",
+   "pg": 1,
+   "all": 0,
+   "col": "",
+   "wd": 2,
+   "ds": "",
+   "x": 60,
+   "y": 60,
+   "text": "Example: RS485 bus \u2013 one master (RS1) and two slaves (RS2, RS3)",
+   "size": 18,
+   "bold": 1,
+   "it": 0,
+   "al": "left",
+   "rot": 0
+  },
+  {
+   "id": 202,
+   "k": "text",
+   "pg": 1,
+   "all": 0,
+   "col": "",
+   "wd": 2,
+   "ds": "",
+   "x": 60,
+   "y": 80,
+   "text": "Press Run. The little screen on each node is an oscilloscope: orange = wire B, blue = wire A. The master asks (TX), a slave answers (RX).",
+   "size": 12,
+   "bold": 0,
+   "it": 0,
+   "al": "left",
+   "rot": 0
+  },
+  {
+   "id": 203,
+   "k": "text",
+   "pg": 1,
+   "all": 0,
+   "col": "",
+   "wd": 2,
+   "ds": "",
+   "x": 60,
+   "y": 98,
+   "text": "Good bus: same baud rate everywhere, termination ON at the two ends (RS1 and RS3), bias ON at one node (RS1), A to A, B to B, G to G.",
+   "size": 12,
+   "bold": 0,
+   "it": 0,
+   "al": "left",
+   "rot": 0
+  },
+  {
+   "id": 204,
+   "k": "text",
+   "pg": 1,
+   "all": 0,
+   "col": "",
+   "wd": 2,
+   "ds": "",
+   "x": 60,
+   "y": 116,
+   "text": "Break it and read the warnings: switch RS1 bias OFF, swap A/B on RS3, set RS2 to 19200 baud, make the cable 3000 m, or turn termination OFF on RS3 at 115200 baud.",
+   "size": 12,
+   "bold": 0,
+   "it": 0,
+   "al": "left",
+   "rot": 0
+  }
+ ],
+ "dw": {
+  "col": "",
+  "wd": 0,
+  "ds": ""
+ },
+ "c": [
+  {
+   "id": 1,
+   "type": "dc",
+   "x": 150,
+   "y": 300,
+   "rot": 0,
+   "label": "V1",
+   "p": {
+    "V": 24,
+    "Imax": 50
+   },
+   "s": {},
+   "pg": 1
+  },
+  {
+   "id": 2,
+   "type": "rs485",
+   "x": 450,
+   "y": 300,
+   "rot": 0,
+   "label": "RS1",
+   "p": {
+    "role": "Master",
+    "baud": "9600",
+    "term": "ON",
+    "bias": "ON",
+    "len": 300,
+    "by": "A5",
+    "V": 24
+   },
+   "s": {},
+   "pg": 1
+  },
+  {
+   "id": 3,
+   "type": "rs485",
+   "x": 750,
+   "y": 300,
+   "rot": 0,
+   "label": "RS2",
+   "p": {
+    "role": "Slave",
+    "baud": "9600",
+    "term": "OFF",
+    "bias": "OFF",
+    "len": 100,
+    "by": "C3",
+    "V": 24
+   },
+   "s": {},
+   "pg": 1
+  },
+  {
+   "id": 4,
+   "type": "rs485",
+   "x": 1050,
+   "y": 300,
+   "rot": 0,
+   "label": "RS3",
+   "p": {
+    "role": "Slave",
+    "baud": "9600",
+    "term": "ON",
+    "bias": "OFF",
+    "len": 100,
+    "by": "5A",
+    "V": 24
+   },
+   "s": {},
+   "pg": 1
+  }
+ ]
+}

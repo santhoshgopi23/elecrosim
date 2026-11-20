@@ -1,0 +1,378 @@
+{
+ "v": 3,
+ "pages": [
+  {
+   "id": 1,
+   "title": "t"
+  }
+ ],
+ "pg": 1,
+ "pid": 2,
+ "tb": {
+  "paper": "A3",
+  "orient": "L",
+  "frame": 1,
+  "project": "Modbus RTU example",
+  "dwgNo": "",
+  "rev": "A",
+  "date": "2026-11-14"
+ },
+ "n": 400,
+ "w": [
+  {
+   "id": 100,
+   "a": "1.0",
+   "b": "2.0",
+   "col": "",
+   "v": [
+    [
+     150,
+     240
+    ],
+    [
+     435,
+     240
+    ]
+   ]
+  },
+  {
+   "id": 101,
+   "a": "1.1",
+   "b": "2.1",
+   "col": "",
+   "v": [
+    [
+     100,
+     345
+    ],
+    [
+     100,
+     225
+    ],
+    [
+     465,
+     225
+    ]
+   ]
+  },
+  {
+   "id": 102,
+   "a": "2.0",
+   "b": "3.0",
+   "col": "",
+   "v": [
+    [
+     435,
+     240
+    ],
+    [
+     735,
+     240
+    ]
+   ]
+  },
+  {
+   "id": 103,
+   "a": "3.0",
+   "b": "4.0",
+   "col": "",
+   "v": [
+    [
+     735,
+     240
+    ],
+    [
+     1035,
+     240
+    ]
+   ]
+  },
+  {
+   "id": 104,
+   "a": "2.1",
+   "b": "3.1",
+   "col": "",
+   "v": [
+    [
+     465,
+     225
+    ],
+    [
+     765,
+     225
+    ]
+   ]
+  },
+  {
+   "id": 105,
+   "a": "3.1",
+   "b": "4.1",
+   "col": "",
+   "v": [
+    [
+     765,
+     225
+    ],
+    [
+     1065,
+     225
+    ]
+   ]
+  },
+  {
+   "id": 106,
+   "a": "2.2",
+   "b": "3.2",
+   "col": "",
+   "v": [
+    [
+     435,
+     360
+    ],
+    [
+     735,
+     360
+    ]
+   ]
+  },
+  {
+   "id": 107,
+   "a": "2.3",
+   "b": "3.3",
+   "col": "",
+   "v": [
+    [
+     450,
+     375
+    ],
+    [
+     750,
+     375
+    ]
+   ]
+  },
+  {
+   "id": 108,
+   "a": "2.4",
+   "b": "3.4",
+   "col": "",
+   "v": [
+    [
+     465,
+     390
+    ],
+    [
+     765,
+     390
+    ]
+   ]
+  },
+  {
+   "id": 109,
+   "a": "3.2",
+   "b": "4.2",
+   "col": "",
+   "v": [
+    [
+     735,
+     360
+    ],
+    [
+     1035,
+     360
+    ]
+   ]
+  },
+  {
+   "id": 110,
+   "a": "3.3",
+   "b": "4.3",
+   "col": "",
+   "v": [
+    [
+     750,
+     375
+    ],
+    [
+     1050,
+     375
+    ]
+   ]
+  },
+  {
+   "id": 111,
+   "a": "3.4",
+   "b": "4.4",
+   "col": "",
+   "v": [
+    [
+     765,
+     390
+    ],
+    [
+     1065,
+     390
+    ]
+   ]
+  }
+ ],
+ "sh": [
+  {
+   "id": 201,
+   "k": "text",
+   "pg": 1,
+   "all": 0,
+   "col": "",
+   "wd": 2,
+   "ds": "",
+   "x": 60,
+   "y": 60,
+   "text": "Example: Modbus RTU – one master (MM1) polls two slaves (MS1 address 1, MS2 address 2) over RS485",
+   "size": 18,
+   "bold": 1,
+   "it": 0,
+   "al": "left",
+   "rot": 0
+  },
+  {
+   "id": 202,
+   "k": "text",
+   "pg": 1,
+   "all": 0,
+   "col": "",
+   "wd": 2,
+   "ds": "",
+   "x": 60,
+   "y": 80,
+   "text": "Press Run, select MM1 (or a slave) and press \"Frame Viewer\" in Properties: the request travels to the slave byte by byte, then the response comes back.",
+   "size": 12,
+   "bold": 0,
+   "it": 0,
+   "al": "left",
+   "rot": 0
+  },
+  {
+   "id": 203,
+   "k": "text",
+   "pg": 1,
+   "all": 0,
+   "col": "",
+   "wd": 2,
+   "ds": "",
+   "x": 60,
+   "y": 98,
+   "text": "Try: slave address 2 (other slave answers), function 06 (write), start register 50 (exception 02), quantity 0 or 200 (exception 03), MS1 \"device failure\" ON (exception 04), function 08 (exception 01).",
+   "size": 12,
+   "bold": 0,
+   "it": 0,
+   "al": "left",
+   "rot": 0
+  },
+  {
+   "id": 204,
+   "k": "text",
+   "pg": 1,
+   "all": 0,
+   "col": "",
+   "wd": 2,
+   "ds": "",
+   "x": 60,
+   "y": 116,
+   "text": "Break the bus on purpose: another baud rate or parity on MS2, swap A/B, give both slaves address 1 (answers overlap, CRC error), or make the cable 3000 m. Press Help on any part for the full explanation.",
+   "size": 12,
+   "bold": 0,
+   "it": 0,
+   "al": "left",
+   "rot": 0
+  }
+ ],
+ "dw": {
+  "col": "",
+  "wd": 0,
+  "ds": ""
+ },
+ "c": [
+  {
+   "id": 1,
+   "type": "dc",
+   "x": 150,
+   "y": 300,
+   "rot": 0,
+   "label": "V1",
+   "p": {
+    "V": 24,
+    "Imax": 50
+   },
+   "s": {},
+   "pg": 1
+  },
+  {
+   "id": 2,
+   "type": "mbm",
+   "x": 450,
+   "y": 300,
+   "rot": 0,
+   "label": "MM1",
+   "p": {
+    "sa": 1,
+    "fc": "03 Read holding registers",
+    "st": 0,
+    "q": 2,
+    "val": 100,
+    "pi": 2000,
+    "to": 1000,
+    "baud": "9600",
+    "par": "Even",
+    "V": 24,
+    "term": "ON",
+    "bias": "ON",
+    "len": 300,
+    "vw": "Physical device (for simulation)"
+   },
+   "s": {},
+   "pg": 1
+  },
+  {
+   "id": 3,
+   "type": "mbs",
+   "x": 750,
+   "y": 300,
+   "rot": 0,
+   "label": "MS1",
+   "p": {
+    "addr": 1,
+    "baud": "9600",
+    "par": "Even",
+    "V": 24,
+    "term": "OFF",
+    "bias": "OFF",
+    "fail": "OFF",
+    "rt": "0:230,1:50,2:1480,3:75,4:0,5:0,6:0,7:0",
+    "vw": "Physical device (for simulation)"
+   },
+   "s": {},
+   "pg": 1
+  },
+  {
+   "id": 4,
+   "type": "mbs",
+   "x": 1050,
+   "y": 300,
+   "rot": 0,
+   "label": "MS2",
+   "p": {
+    "addr": 2,
+    "baud": "9600",
+    "par": "Even",
+    "V": 24,
+    "term": "ON",
+    "bias": "OFF",
+    "fail": "OFF",
+    "rt": "0:400,1:1,2:250,3:3000",
+    "vw": "Physical device (for simulation)"
+   },
+   "s": {},
+   "pg": 1
+  }
+ ]
+}

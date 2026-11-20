@@ -1,0 +1,461 @@
+{
+ "v": 3,
+ "pages": [
+  {
+   "id": 1,
+   "title": "t"
+  }
+ ],
+ "pg": 1,
+ "pid": 2,
+ "tb": {
+  "paper": "A3",
+  "orient": "L",
+  "frame": 1,
+  "project": "Ethernet switch example",
+  "dwgNo": "",
+  "rev": "A",
+  "date": "2026-11-14"
+ },
+ "n": 400,
+ "w": [
+  {
+   "id": 100,
+   "a": "1.0",
+   "b": "2.0",
+   "col": "",
+   "v": []
+  },
+  {
+   "id": 101,
+   "a": "1.1",
+   "b": "2.1",
+   "col": "",
+   "v": []
+  },
+  {
+   "id": 102,
+   "a": "2.0",
+   "b": "3.0",
+   "col": "",
+   "v": []
+  },
+  {
+   "id": 103,
+   "a": "2.1",
+   "b": "3.1",
+   "col": "",
+   "v": []
+  },
+  {
+   "id": 104,
+   "a": "2.0",
+   "b": "4.0",
+   "col": "",
+   "v": []
+  },
+  {
+   "id": 105,
+   "a": "2.1",
+   "b": "4.1",
+   "col": "",
+   "v": []
+  },
+  {
+   "id": 106,
+   "a": "2.0",
+   "b": "5.0",
+   "col": "",
+   "v": []
+  },
+  {
+   "id": 107,
+   "a": "2.1",
+   "b": "5.1",
+   "col": "",
+   "v": []
+  },
+  {
+   "id": 108,
+   "a": "3.2",
+   "b": "6.0",
+   "col": "",
+   "v": []
+  },
+  {
+   "id": 109,
+   "a": "6.1",
+   "b": "8.0",
+   "col": "",
+   "v": []
+  },
+  {
+   "id": 110,
+   "a": "8.1",
+   "b": "7.1",
+   "col": "",
+   "v": []
+  },
+  {
+   "id": 111,
+   "a": "7.0",
+   "b": "2.2",
+   "col": "",
+   "v": []
+  },
+  {
+   "id": 112,
+   "a": "4.2",
+   "b": "9.0",
+   "col": "",
+   "v": []
+  },
+  {
+   "id": 113,
+   "a": "10.1",
+   "b": "11.0",
+   "col": "",
+   "v": []
+  },
+  {
+   "id": 114,
+   "a": "11.1",
+   "b": "9.1",
+   "col": "",
+   "v": []
+  },
+  {
+   "id": 115,
+   "a": "10.0",
+   "b": "2.8",
+   "col": "",
+   "v": []
+  },
+  {
+   "id": 116,
+   "a": "5.2",
+   "b": "12.0",
+   "col": "",
+   "v": []
+  },
+  {
+   "id": 117,
+   "a": "13.1",
+   "b": "14.0",
+   "col": "",
+   "v": []
+  },
+  {
+   "id": 118,
+   "a": "14.1",
+   "b": "12.1",
+   "col": "",
+   "v": []
+  },
+  {
+   "id": 119,
+   "a": "13.0",
+   "b": "2.5",
+   "col": "",
+   "v": []
+  }
+ ],
+ "sh": [
+  {
+   "id": 201,
+   "k": "text",
+   "pg": 1,
+   "all": 0,
+   "col": "",
+   "wd": 2,
+   "ds": "",
+   "x": 60,
+   "y": 60,
+   "text": "Example: Ethernet switch – three PCs on one 8-port switch (SW1), 192.168.1.0 / 24",
+   "size": 18,
+   "bold": 1,
+   "it": 0,
+   "al": "left",
+   "rot": 0
+  },
+  {
+   "id": 202,
+   "k": "text",
+   "pg": 1,
+   "all": 0,
+   "col": "",
+   "wd": 2,
+   "ds": "",
+   "x": 60,
+   "y": 78,
+   "text": "Press Run: PC1 and PC3 send pings. The first exchange is an ARP broadcast (orange) that the switch floods to every port; then the frames (blue = data, green = reply) go only to the learned port. Select SW1 to see its MAC table.",
+   "size": 12,
+   "bold": 0,
+   "it": 0,
+   "al": "left",
+   "rot": 0
+  },
+  {
+   "id": 203,
+   "k": "text",
+   "pg": 1,
+   "all": 0,
+   "col": "",
+   "wd": 2,
+   "ds": "",
+   "x": 60,
+   "y": 96,
+   "text": "Each device: LAN → RJ45 PORT … CABLE → cable → CABLE … PORT → switch port. Ports used: 1 (PC1), 4 (PC3), 7 (PC2). Straight-through cables, both plugs T568B.",
+   "size": 12,
+   "bold": 0,
+   "it": 0,
+   "al": "left",
+   "rot": 0
+  },
+  {
+   "id": 204,
+   "k": "text",
+   "pg": 1,
+   "all": 0,
+   "col": "",
+   "wd": 2,
+   "ds": "",
+   "x": 60,
+   "y": 114,
+   "text": "Break it: give PC3 the address 192.168.2.30 (other subnet – needs a router); give PC2 the same IP as PC1 (conflict); add a cable between two free switch ports (ring = broadcast storm); make CAB3 120 m; set Number of ports to 5 and use port 7.",
+   "size": 12,
+   "bold": 0,
+   "it": 0,
+   "al": "left",
+   "rot": 0
+  }
+ ],
+ "dw": {
+  "col": "",
+  "wd": 0,
+  "ds": ""
+ },
+ "c": [
+  {
+   "id": 1,
+   "type": "dc",
+   "x": 150,
+   "y": 300,
+   "rot": 0,
+   "label": "V1",
+   "p": {
+    "V": 24,
+    "Imax": 50
+   },
+   "s": {},
+   "pg": 1
+  },
+  {
+   "id": 2,
+   "type": "ethsw",
+   "x": 620,
+   "y": 150,
+   "rot": 0,
+   "label": "SW1",
+   "p": {
+    "ports": "8",
+    "speed": "1000",
+    "V": 24
+   },
+   "s": {},
+   "pg": 1
+  },
+  {
+   "id": 3,
+   "type": "ethp",
+   "x": 250,
+   "y": 150,
+   "rot": 0,
+   "label": "PC1",
+   "p": {
+    "role": "PC / device (MDI)",
+    "speed": "1000",
+    "amdix": "ON",
+    "V": 24,
+    "ip": "192.168.1.10",
+    "mask": "255.255.255.0",
+    "dst": "192.168.1.20"
+   },
+   "s": {},
+   "pg": 1
+  },
+  {
+   "id": 4,
+   "type": "ethp",
+   "x": 850,
+   "y": 150,
+   "rot": 0,
+   "label": "PC2",
+   "p": {
+    "role": "PC / device (MDI)",
+    "speed": "1000",
+    "amdix": "ON",
+    "V": 24,
+    "ip": "192.168.1.20",
+    "mask": "255.255.255.0",
+    "dst": ""
+   },
+   "s": {},
+   "pg": 1
+  },
+  {
+   "id": 5,
+   "type": "ethp",
+   "x": 1050,
+   "y": 150,
+   "rot": 0,
+   "label": "PC3",
+   "p": {
+    "role": "PC / device (MDI)",
+    "speed": "1000",
+    "amdix": "ON",
+    "V": 24,
+    "ip": "192.168.1.30",
+    "mask": "255.255.255.0",
+    "dst": "192.168.1.10"
+   },
+   "s": {},
+   "pg": 1
+  },
+  {
+   "id": 6,
+   "type": "rj45",
+   "x": 250,
+   "y": 270,
+   "rot": 0,
+   "label": "RJ1",
+   "p": {
+    "std": "T568B",
+    "sh": "Unshielded (UTP)"
+   },
+   "s": {},
+   "pg": 1
+  },
+  {
+   "id": 7,
+   "type": "rj45",
+   "x": 560,
+   "y": 270,
+   "rot": 0,
+   "label": "RJ2",
+   "p": {
+    "std": "T568B",
+    "sh": "Unshielded (UTP)"
+   },
+   "s": {},
+   "pg": 1
+  },
+  {
+   "id": 8,
+   "type": "ethc",
+   "x": 405,
+   "y": 360,
+   "rot": 0,
+   "label": "CAB1",
+   "p": {
+    "cat": "CAT6",
+    "len": 20,
+    "shd": "Unshielded (UTP)",
+    "wire": "Straight-through",
+    "noise": "Low (office)"
+   },
+   "s": {},
+   "pg": 1
+  },
+  {
+   "id": 9,
+   "type": "rj45",
+   "x": 850,
+   "y": 270,
+   "rot": 0,
+   "label": "RJ3",
+   "p": {
+    "std": "T568B",
+    "sh": "Unshielded (UTP)"
+   },
+   "s": {},
+   "pg": 1
+  },
+  {
+   "id": 10,
+   "type": "rj45",
+   "x": 650,
+   "y": 270,
+   "rot": 0,
+   "label": "RJ4",
+   "p": {
+    "std": "T568B",
+    "sh": "Unshielded (UTP)"
+   },
+   "s": {},
+   "pg": 1
+  },
+  {
+   "id": 11,
+   "type": "ethc",
+   "x": 750,
+   "y": 440,
+   "rot": 0,
+   "label": "CAB2",
+   "p": {
+    "cat": "CAT6",
+    "len": 15,
+    "shd": "Unshielded (UTP)",
+    "wire": "Straight-through",
+    "noise": "Low (office)"
+   },
+   "s": {},
+   "pg": 1
+  },
+  {
+   "id": 12,
+   "type": "rj45",
+   "x": 1050,
+   "y": 270,
+   "rot": 0,
+   "label": "RJ5",
+   "p": {
+    "std": "T568B",
+    "sh": "Unshielded (UTP)"
+   },
+   "s": {},
+   "pg": 1
+  },
+  {
+   "id": 13,
+   "type": "rj45",
+   "x": 605,
+   "y": 270,
+   "rot": 0,
+   "label": "RJ6",
+   "p": {
+    "std": "T568B",
+    "sh": "Unshielded (UTP)"
+   },
+   "s": {},
+   "pg": 1
+  },
+  {
+   "id": 14,
+   "type": "ethc",
+   "x": 830,
+   "y": 520,
+   "rot": 0,
+   "label": "CAB3",
+   "p": {
+    "cat": "CAT6",
+    "len": 60,
+    "shd": "Unshielded (UTP)",
+    "wire": "Straight-through",
+    "noise": "Low (office)"
+   },
+   "s": {},
+   "pg": 1
+  }
+ ]
+}

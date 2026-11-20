@@ -1,0 +1,247 @@
+{
+ "v": 3,
+ "pages": [
+  {
+   "id": 1,
+   "title": "t"
+  }
+ ],
+ "pg": 1,
+ "pid": 2,
+ "tb": {
+  "paper": "A3",
+  "orient": "L",
+  "frame": 1,
+  "project": "Ethernet link example",
+  "dwgNo": "",
+  "rev": "A",
+  "date": "2026-11-14"
+ },
+ "n": 400,
+ "w": [
+  {
+   "id": 100,
+   "a": "1.0",
+   "b": "2.0",
+   "col": "",
+   "v": []
+  },
+  {
+   "id": 101,
+   "a": "1.1",
+   "b": "2.1",
+   "col": "",
+   "v": []
+  },
+  {
+   "id": 102,
+   "a": "2.0",
+   "b": "3.0",
+   "col": "",
+   "v": []
+  },
+  {
+   "id": 103,
+   "a": "2.1",
+   "b": "3.1",
+   "col": "",
+   "v": []
+  },
+  {
+   "id": 104,
+   "a": "2.2",
+   "b": "4.0",
+   "col": "",
+   "v": []
+  },
+  {
+   "id": 105,
+   "a": "4.1",
+   "b": "6.0",
+   "col": "",
+   "v": []
+  },
+  {
+   "id": 106,
+   "a": "6.1",
+   "b": "5.1",
+   "col": "",
+   "v": []
+  },
+  {
+   "id": 107,
+   "a": "5.0",
+   "b": "3.2",
+   "col": "",
+   "v": []
+  }
+ ],
+ "sh": [
+  {
+   "id": 201,
+   "k": "text",
+   "pg": 1,
+   "all": 0,
+   "col": "",
+   "wd": 2,
+   "ds": "",
+   "x": 60,
+   "y": 60,
+   "text": "Example: Ethernet link – a PC (ETH1) and a switch port (ETH2) over a 30 m CAT6 cable with two RJ45 plugs",
+   "size": 18,
+   "bold": 1,
+   "it": 0,
+   "al": "left",
+   "rot": 0
+  },
+  {
+   "id": 202,
+   "k": "text",
+   "pg": 1,
+   "all": 0,
+   "col": "",
+   "wd": 2,
+   "ds": "",
+   "x": 60,
+   "y": 78,
+   "text": "Press Run: the link LED turns green and shows the speed (1 Gbps). The cable shows its 4 twisted pairs and moving pulses.",
+   "size": 12,
+   "bold": 0,
+   "it": 0,
+   "al": "left",
+   "rot": 0
+  },
+  {
+   "id": 203,
+   "k": "text",
+   "pg": 1,
+   "all": 0,
+   "col": "",
+   "wd": 2,
+   "ds": "",
+   "x": 60,
+   "y": 96,
+   "text": "Chain: device LAN → RJ45 PORT … RJ45 CABLE → cable A … B → RJ45 CABLE … RJ45 PORT → device LAN. Both plugs are T568B and the cable is straight-through: PC (MDI) to switch (MDI-X).",
+   "size": 12,
+   "bold": 0,
+   "it": 0,
+   "al": "left",
+   "rot": 0
+  },
+  {
+   "id": 204,
+   "k": "text",
+   "pg": 1,
+   "all": 0,
+   "col": "",
+   "wd": 2,
+   "ds": "",
+   "x": 60,
+   "y": 114,
+   "text": "Break it: set a plug to Custom and swap two pins; set RJ1 to T568A (crossover!); make the cable 120 m; choose Crossover (with Auto MDI-X OFF); unshielded CAT5e with noise High; 10 Gbps over CAT6 beyond 55 m.",
+   "size": 12,
+   "bold": 0,
+   "it": 0,
+   "al": "left",
+   "rot": 0
+  }
+ ],
+ "dw": {
+  "col": "",
+  "wd": 0,
+  "ds": ""
+ },
+ "c": [
+  {
+   "id": 1,
+   "type": "dc",
+   "x": 150,
+   "y": 300,
+   "rot": 0,
+   "label": "V1",
+   "p": {
+    "V": 24,
+    "Imax": 50
+   },
+   "s": {},
+   "pg": 1
+  },
+  {
+   "id": 2,
+   "type": "ethp",
+   "x": 300,
+   "y": 250,
+   "rot": 0,
+   "label": "ETH1",
+   "p": {
+    "role": "PC / device (MDI)",
+    "speed": "1000",
+    "amdix": "OFF",
+    "V": 24
+   },
+   "s": {},
+   "pg": 1
+  },
+  {
+   "id": 3,
+   "type": "ethp",
+   "x": 900,
+   "y": 250,
+   "rot": 0,
+   "label": "ETH2",
+   "p": {
+    "role": "Switch / hub (MDI-X)",
+    "speed": "1000",
+    "amdix": "OFF",
+    "V": 24
+   },
+   "s": {},
+   "pg": 1
+  },
+  {
+   "id": 4,
+   "type": "rj45",
+   "x": 300,
+   "y": 400,
+   "rot": 0,
+   "label": "RJ1",
+   "p": {
+    "std": "T568B",
+    "sh": "Unshielded (UTP)"
+   },
+   "s": {},
+   "pg": 1
+  },
+  {
+   "id": 5,
+   "type": "rj45",
+   "x": 900,
+   "y": 400,
+   "rot": 0,
+   "label": "RJ2",
+   "p": {
+    "std": "T568B",
+    "sh": "Unshielded (UTP)"
+   },
+   "s": {},
+   "pg": 1
+  },
+  {
+   "id": 6,
+   "type": "ethc",
+   "x": 600,
+   "y": 450,
+   "rot": 0,
+   "label": "CAB1",
+   "p": {
+    "cat": "CAT6",
+    "len": 30,
+    "shd": "Unshielded (UTP)",
+    "wire": "Straight-through",
+    "noise": "Low (office)"
+   },
+   "s": {},
+   "pg": 1
+  }
+ ]
+}

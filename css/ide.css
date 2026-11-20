@@ -1,0 +1,419 @@
+/* ElectroSim v8.31 – "Engineering workbench" look (industrial PLC / automation IDE style): flat, square, dense, docked windows with title bars,
+   tree-style library, inspector-style properties, document tabs, diagnostics-style results.  Loaded after style.css (override only). */
+:root{--bg:#aab3bd;--pn:#f4f5f7;--pn2:#e6e9ed;--pn3:#d8dde3;--bd:#9ea8b3;--bd2:#c3cad1;--tx:#18222d;--mu:#56646f;--ac:#0a5ea8;--ac2:#084a86;--ok:#2d8a3e;--er:#c62828;--wa:#b26a00;--nv:#2b343e;
+ --tb:#2f3944;--tbx:#e8edf2;--tbh:#46525f;--ph:#cfd6dd;--sel:#cfe3f7;--hov:#e1ecf7;--rw:300px;--lw:250px;--rb:#eef0f3}
+@media (prefers-color-scheme:dark){:root{--bg:#14181d;--pn:#252b33;--pn2:#2d343d;--pn3:#363e49;--bd:#4b5663;--bd2:#39424d;--tx:#e3e9ef;--mu:#9aa7b4;--ac:#4f9de0;--ac2:#3a86c8;--ok:#4cc16a;--er:#f0625f;--wa:#e8a33a;--tb:#1b2027;--tbh:#38414c;--ph:#323a44;--sel:#27425e;--hov:#2f3b49;--rb:#2a3038}}
+html,body{font-family:"Segoe UI",Tahoma,"Helvetica Neue",Arial,sans-serif;font-size:12.5px;color:var(--tx)}
+*,*::before,*::after{border-radius:0!important}
+/* ---- controls: flat ---- */
+button{background:var(--pn2);border:1px solid var(--bd);border-radius:2px!important;box-shadow:none;font-weight:500;font-size:12px;min-height:26px;padding:3px 10px;color:var(--tx);transition:none}
+button:hover:not(:disabled){background:var(--hov);border-color:var(--ac);box-shadow:none}button:active:not(:disabled){background:var(--sel);transform:none}
+button.pri,.pri{background:var(--ac);border-color:var(--ac2);color:#fff}button.pri:hover:not(:disabled){background:var(--ac2);border-color:var(--ac2)}
+input,select,textarea{background:var(--pn);color:var(--tx);border:1px solid var(--bd);border-radius:0!important;min-height:24px;padding:2px 6px;box-shadow:inset 0 1px 1px rgba(0,0,0,.06)}
+input:hover,select:hover{border-color:var(--mu)}input:focus,select:focus,textarea:focus{border-color:var(--ac);box-shadow:inset 0 0 0 1px var(--ac);outline:0}
+button:focus-visible,input:focus-visible,select:focus-visible{outline:1px dotted var(--ac);outline-offset:1px}
+/* ---- title / menu bar ---- */
+#ribbon{background:var(--rb);border-bottom:1px solid var(--bd);box-shadow:none}
+#rtop{background:var(--tb);gap:2px;padding-top:0;min-height:32px;border-bottom:1px solid #12181e}
+#rtop .logo{display:flex;align-items:center;gap:8px;margin:0 14px 0 4px;color:#fff;font-size:12px;letter-spacing:.12em;font-weight:700;text-transform:uppercase}
+#rtop .logo .mk{display:inline-block;width:14px;height:14px;background:#2a8be0;border:2px solid #fff;box-sizing:border-box}
+#rtop .logo small{font-weight:400;letter-spacing:.04em;opacity:.7;text-transform:none;margin-left:2px}
+#rtabs{background:transparent}#rtabs button{background:transparent;color:var(--tbx);border:0;border-bottom:0;min-height:32px;padding:0 16px;font-size:12.5px;font-weight:400;border-radius:0!important}
+#rtabs button:hover{background:var(--tbh);color:#fff;border:0}#rtabs button[aria-selected=true]{background:var(--rb);color:var(--tx);font-weight:600;border:0;box-shadow:none}
+#rtop button.ic{background:transparent;border:1px solid transparent;color:var(--tbx);height:26px;width:30px;border-radius:2px!important;box-shadow:none}
+#rtop button.ic:hover:not(:disabled){background:var(--tbh);border-color:#6a7886}#rtop button[aria-pressed=true]{background:#1b2026;border-color:#6a7886}
+#rtop .run{background:#2e8b3d!important;border-color:#1f6a2c!important;color:#fff!important}#rtop .run:hover{background:#37a049!important}
+#rtop .stop{background:#b92b2b!important;border-color:#8c1f1f!important;color:#fff!important}#rtop .stop:hover{background:#d13a3a!important}
+#rtop .pri{background:transparent!important;border-color:transparent!important}
+#rtop .vs{background:#56626f;margin:0 5px}
+#stat{background:#12171c;border:1px solid #4a5662;color:#9fb0c0;padding:3px 12px;font:600 11px "Segoe UI",Arial,sans-serif;letter-spacing:.08em;min-width:86px;text-align:center;border-radius:0!important}
+#stat::before{content:"";display:inline-block;width:8px;height:8px;margin-right:7px;background:#7d8895;vertical-align:-1px}
+#bFile{background:var(--tbh)!important;border:1px solid #6a7886!important;color:#fff!important;height:26px;padding:0 12px;font-weight:600;box-shadow:none}#bFile:hover{background:#57667a!important}
+#rtop .mw{position:relative}
+/* ---- toolbar (ribbon body) ---- */
+#rbody{background:var(--rb);min-height:72px;padding:3px 4px 0}
+.rp{border-right:1px solid var(--bd2);padding:0 8px}.rp .rn{color:var(--mu);font-size:10.5px;letter-spacing:.05em;text-transform:uppercase;border-top:1px solid var(--bd2);margin-top:2px;padding-top:2px}
+#ribbon .rb{color:var(--tx);border-radius:2px!important;min-height:52px;background:transparent}
+#ribbon .rb:hover:not(:disabled){background:var(--hov);border-color:#7fa8d1}
+#ribbon .rb[aria-pressed=true]{background:var(--sel);border-color:var(--ac);color:var(--tx);box-shadow:none}
+#ribbon .rb svg{stroke-width:1.6}
+.rsel label{color:var(--tx)}.rsel select{background:var(--pn);color:var(--tx);border-color:var(--bd)}
+/* ---- docked windows (library / properties) ---- */
+aside{display:flex;flex-direction:column;background:var(--pn);box-shadow:none}
+#lib{border-right:1px solid var(--bd);--lw:250px}#props{border-left:1px solid var(--bd)}
+aside::before{content:"";display:block;flex:none;box-sizing:border-box;height:26px;padding:0 10px;background:var(--ph);border-bottom:1px solid var(--bd);color:var(--tx);font:700 11px/25px "Segoe UI",Arial,sans-serif;letter-spacing:.08em;text-transform:uppercase}
+#lib::before{content:"Component library"}#props::before{content:"Properties"}
+aside .in{flex:1;height:auto;min-height:0;padding:0}#lib .in{width:var(--lw)}#props .in{width:var(--rw)}
+#q{margin:6px;width:calc(100% - 12px);background:var(--pn);border:1px solid var(--bd);min-height:26px;padding-left:8px;box-shadow:none}
+/* library = tree + list */
+#libList details{border-bottom:1px solid var(--bd2)}
+#libList summary{display:block;padding:5px 8px;background:var(--pn2);color:var(--tx);font:700 11px "Segoe UI",Arial,sans-serif;letter-spacing:.06em;text-transform:uppercase;border:0;border-top:1px solid var(--bd2);cursor:pointer;margin:0;box-shadow:none}
+#libList summary:hover{background:var(--hov)}
+#libList .grid{display:flex;flex-direction:column;gap:0;padding:0}
+.item{flex-direction:row;align-items:center;justify-content:flex-start;gap:8px;padding:2px 8px;border:0;border-bottom:1px solid var(--bd2);background:var(--pn);box-shadow:none;text-align:left;font-size:12px;min-height:34px;transform:none}
+.item svg{width:46px;height:28px;flex:none;background:var(--pn2);border:1px solid var(--bd2)}.item span{flex:1;line-height:1.2}
+.item:hover{background:var(--hov);box-shadow:inset 3px 0 0 var(--ac);border-color:var(--bd2);transform:none}
+/* properties = inspector */
+#propsBody{padding:0}
+#propsBody h3{display:flex;align-items:center;justify-content:space-between;gap:8px;margin:0;padding:7px 10px;background:var(--pn2);border-bottom:1px solid var(--bd);font:700 12.5px "Segoe UI",Arial,sans-serif;color:var(--tx)}
+#propsBody h3 .hlp{min-height:22px;padding:0 10px;font-size:11px;margin:0}
+#propsBody>*:not(h3){margin-left:10px;margin-right:10px}
+#propsBody label{display:grid;grid-template-columns:46% 1fr;align-items:center;gap:6px;margin:0;margin-left:0;margin-right:0;padding:3px 10px;border-bottom:1px solid var(--bd2);color:var(--tx);font-size:11.5px;font-weight:400;line-height:1.2}
+#propsBody label:nth-of-type(odd){background:color-mix(in srgb,var(--pn2) 55%,transparent)}
+#propsBody label input,#propsBody label select{margin:0;width:100%;min-width:0}#propsBody label input[type=checkbox]{width:auto;justify-self:start}
+#propsBody label input[type=color]{height:24px;padding:1px}
+.sec{margin:0!important;padding:5px 10px!important;background:var(--pn3);border:0!important;border-top:1px solid var(--bd)!important;border-bottom:1px solid var(--bd)!important;color:var(--tx);font:700 10.5px "Segoe UI",Arial,sans-serif;letter-spacing:.08em}
+#propsBody .tip{margin:0;padding:6px 10px;border:0;border-bottom:1px solid var(--bd2);background:#fff8dc;color:#5c4a00;font-size:11px}
+@media (prefers-color-scheme:dark){#propsBody .tip{background:#3a3520;color:#e8d891}}
+#propsBody .mu,#propsBody p{padding:0 10px}
+/* ---- workspace ---- */
+#cv{background:var(--bg);box-shadow:none}
+@media (prefers-color-scheme:dark){#cv{background:#1a1f26}}
+#zc,#sbar,#sts{background:var(--pn);border:1px solid var(--bd);border-radius:0!important;box-shadow:0 1px 3px rgba(0,0,0,.25)}
+#zc{top:8px;right:10px;padding:2px;gap:2px}#zc button{border:1px solid transparent;background:transparent;min-height:24px}#zc button:hover{background:var(--hov);border-color:var(--ac)}
+#sts{padding:2px 4px;gap:2px}#sts button{background:var(--pn2);min-height:22px;padding:0 9px;font-size:10.5px;letter-spacing:.05em}
+#sts button[aria-pressed=true],#sts button.on{background:var(--ac);color:#fff;border-color:var(--ac2)}
+#sts #xy{padding:0 8px;color:var(--mu)}
+#sbar{padding:2px;gap:2px}#sbar button{background:var(--pn2);min-height:26px}
+#cmd{left:10px;transform:none;bottom:10px;width:min(480px,calc(100% - 340px));background:#1d242c;border:1px solid #56626f;border-radius:0!important;box-shadow:0 1px 4px rgba(0,0,0,.4)}
+#cmd .cp{color:#7fb6ee;letter-spacing:.08em}
+.edge{background:var(--pn2);border:1px solid var(--bd);box-shadow:none;color:var(--tx)}.edge:hover{background:var(--hov)}
+#toast{background:#1d242c;border:1px solid #56626f;border-left:4px solid #2a8be0;box-shadow:0 2px 8px rgba(0,0,0,.4)}
+/* ---- sheet tabs (like workbook tabs) ---- */
+nav#pages{background:var(--pn3);border-top:1px solid var(--bd);padding:0 6px;gap:0;align-items:stretch;min-height:28px}
+nav#pages .pgt,nav#pages button{border:1px solid var(--bd);border-top:0;background:var(--pn2);min-height:26px;padding:0 14px;margin:0 -1px 0 0;font-weight:400;font-size:12px}
+nav#pages .pgt.act{background:var(--pn);border-bottom:3px solid var(--ac);color:var(--tx);font-weight:600}
+nav#pages #pgAdd{background:var(--pn2);color:var(--tx);border-color:var(--bd);margin-left:6px;align-self:center;min-height:22px}nav#pages #pgAdd:hover{background:var(--hov)}
+/* ---- results = diagnostics window ---- */
+#ft{background:var(--pn);border-top:1px solid var(--bd);box-shadow:none}
+#ft .fh{display:flex;justify-content:space-between;align-items:center;min-height:26px;padding:0 6px 0 10px;background:var(--tb);color:#fff;border-bottom:1px solid #12181e}
+#ft .fh b{color:#fff;font:700 11px "Segoe UI",Arial,sans-serif;letter-spacing:.08em;text-transform:uppercase}
+#ft .fh button{background:transparent;border-color:transparent;color:#fff;min-height:20px;height:20px;padding:0 8px}#ft .fh button:hover{background:var(--tbh);border-color:#6a7886}
+#ft table{border:0}#ft thead th{background:var(--pn3);border:1px solid var(--bd2);border-top:0;color:var(--tx);font-size:10.5px;letter-spacing:.06em;padding:4px 8px}
+#ft td{border:1px solid var(--bd2);padding:3px 8px;font-variant-numeric:tabular-nums}#ft tbody tr:nth-child(even){background:var(--pn2)}#ft tbody tr:hover{background:var(--hov)}
+.m{border:1px solid var(--bd);border-left:4px solid var(--ok);background:var(--pn2);box-shadow:none;font-weight:500;border-radius:0!important}.m.er{border-left-color:var(--er)}.m.wa{border-left-color:var(--wa)}
+/* ---- menus & dialogs ---- */
+#menu,#fmenu{background:var(--pn);border:1px solid var(--bd);box-shadow:0 4px 14px rgba(0,0,0,.3);padding:2px;top:30px}
+#menu button,#fmenu button{background:transparent;border:0;min-height:26px;padding:3px 10px;font-weight:400;text-align:left}#menu button:hover,#fmenu button:hover{background:var(--sel);border:0}
+#fmenu kbd{color:var(--mu);font-family:inherit}#fName{background:var(--pn2);border-bottom:1px solid var(--bd2)}
+dialog,.dlg{border:1px solid var(--bd);box-shadow:0 8px 28px rgba(0,0,0,.4)}
+*{scrollbar-width:thin;scrollbar-color:var(--bd) var(--pn2)}*::-webkit-scrollbar{width:12px;height:12px}*::-webkit-scrollbar-track{background:var(--pn2)}*::-webkit-scrollbar-thumb{background:var(--bd);border:2px solid var(--pn2)}
+@media (max-width:760px){#cmd{width:calc(100% - 20px);bottom:44px}aside::before{display:none}}
+
+/* ===== v8.32 – PLC programming window in the same engineering-workbench style ===== */
+#dPLC{--hd:var(--pn2);--hd2:var(--sel);--hdt:var(--ac2);--rl:var(--tx);--slf:rgba(10,94,168,.10);
+ width:100vw;height:100dvh;max-width:100vw;max-height:100dvh;margin:0;border:0;background:var(--pn);color:var(--tx);box-shadow:none;font-size:12.5px}
+@media (prefers-color-scheme:dark){#dPLC{--hdt:#8fc3f0;--slf:rgba(79,157,224,.14)}}
+#dPLC button{border-radius:2px!important;font-size:12px;min-height:26px;padding:3px 10px;background:var(--pn2);border:1px solid var(--bd);font-weight:500}
+#dPLC button:hover:not(:disabled){background:var(--hov);border-color:var(--ac)}
+#dPLC button.pri{background:var(--ac);border-color:var(--ac2);color:#fff}#dPLC button.dn{color:var(--er)}
+#dPLC select,#dPLC input[type=number],#dPLC input[type=text],#dPLC .tgh input[type=search]{border-radius:0;border:1px solid var(--bd);background:var(--pn);min-height:24px;padding:2px 6px;box-shadow:inset 0 1px 1px rgba(0,0,0,.06)}
+#dPLC select:focus,#dPLC input:focus{border-color:var(--ac);box-shadow:inset 0 0 0 1px var(--ac);outline:0}
+/* title bar */
+#dPLC .ph{background:var(--tb);color:#fff;gap:2px;padding:0 4px 0 12px;min-height:32px;border-bottom:1px solid #12181e}
+#dPLC .ph b{font:700 12px "Segoe UI",Arial,sans-serif;letter-spacing:.1em;text-transform:uppercase}
+#dPLC .ph #plSt{background:#12171c;border:1px solid #4a5662;color:#9fb0c0;padding:3px 12px;font:600 11px "Segoe UI",Arial,sans-serif;letter-spacing:.08em;margin:0 8px 0 0;opacity:1}
+#dPLC .ph button{background:transparent;border:1px solid transparent;color:var(--tbx);min-height:26px;height:26px;padding:0 12px}
+#dPLC .ph button:hover:not(:disabled){background:var(--tbh);border-color:#6a7886}
+#dPLC .ph button[data-op=run]{background:#2e8b3d;border-color:#1f6a2c;color:#fff}#dPLC .ph button[data-op=run]:hover{background:#37a049}
+#dPLC .ph button[data-op=stop]{background:#b92b2b;border-color:#8c1f1f;color:#fff}#dPLC .ph button[data-op=stop]:hover{background:#d13a3a}
+#dPLC .ph button[data-op=close]{background:var(--tbh);border-color:#6a7886;color:#fff;font-weight:600;margin-left:6px}#dPLC .ph button[data-op=close]:hover{background:#b92b2b;border-color:#8c1f1f}
+/* toolbar */
+#dPLC .ptb{background:var(--rb);padding:4px 8px;gap:3px;border-bottom:1px solid var(--bd)}
+#dPLC .ptb button{background:transparent;border:1px solid transparent;min-height:26px}
+#dPLC .ptb button:hover:not(:disabled){background:var(--hov);border-color:#7fa8d1}
+#dPLC .ptb .vs{background:var(--bd);margin:0 6px}
+#dPLC .ptb .zm{color:var(--tx)}
+/* left = components, right = properties (like the main window) */
+#dPLC .pins,#dPLC .pprop{background:var(--pn);flex:none;display:flex;flex-direction:column;overflow:hidden;padding:0}
+#dPLC .pins{width:236px;border-left:0;border-right:1px solid var(--bd)}
+#dPLC .pprop{width:290px;border-left:1px solid var(--bd)}
+#dPLC .pt0{background:var(--ph);color:var(--tx);height:26px;box-sizing:border-box;padding:0 10px;font:700 11px/25px "Segoe UI",Arial,sans-serif;letter-spacing:.08em;border-bottom:1px solid var(--bd);text-transform:uppercase;flex:none}
+#dPLC #plSrch{margin:6px;width:calc(100% - 12px);box-sizing:border-box;min-height:26px;flex:none}
+#dPLC .phint{background:#fff8dc;color:#5c4a00;border-bottom:1px solid var(--bd2);padding:5px 10px;font-size:11px;flex:none}
+@media (prefers-color-scheme:dark){#dPLC .phint{background:#3a3520;color:#e8d891}}
+#dPLC .pil{flex:1;overflow:auto;min-height:0}
+#dPLC .pins details>summary{background:var(--pn3);color:var(--tx);border-top:1px solid var(--bd);border-bottom:1px solid var(--bd);padding:4px 10px;font:700 10.5px "Segoe UI",Arial,sans-serif;letter-spacing:.08em;text-transform:uppercase}
+#dPLC .pins .gb{padding:0;gap:0;display:flex;flex-direction:column}
+#dPLC .pi{border:0;border-bottom:1px solid var(--bd2);background:var(--pn);min-height:34px;padding:3px 10px;width:100%;gap:10px;touch-action:none}
+#dPLC .pi:hover:not(:disabled){background:var(--hov);box-shadow:inset 3px 0 0 var(--ac);border-bottom:1px solid var(--bd2)}
+#dPLC .pi .sy{min-width:42px;color:var(--ac2);background:var(--pn2);border:1px solid var(--bd2);padding:2px 0;font-size:12px}
+@media (prefers-color-scheme:dark){#dPLC .pi .sy{color:#8fc3f0}}
+#dPLC .pi .nm{font-size:12px;white-space:normal;line-height:1.2}
+#dPLC .pi[hidden],#dPLC .pil details[hidden]{display:none}
+/* view tabs (Ladder / Tag table / Device configuration / Help) */
+#dPLC .vtabs{display:flex;background:var(--pn3);border-bottom:1px solid var(--bd);padding:3px 6px 0;gap:2px;flex:none}
+#dPLC .vtabs .ti{background:var(--pn2);border:1px solid var(--bd);border-bottom:0;min-height:26px;padding:0 16px;font-weight:400}
+#dPLC .vtabs .ti.on{background:var(--pn);font-weight:600;border-top:3px solid var(--ac);box-shadow:none;min-height:27px;margin-bottom:-1px}
+/* properties = inspector */
+#dPLC .ppi{flex:1;overflow:auto;min-height:0}
+#dPLC .ppi .pk{padding:7px 10px;background:var(--pn2);border-bottom:1px solid var(--bd);font-weight:700;font-size:12.5px}
+#dPLC .ppi label{display:grid;grid-template-columns:42% 1fr;align-items:center;gap:6px;margin:0;padding:3px 10px;border-bottom:1px solid var(--bd2);font-size:11.5px;color:var(--tx)}
+#dPLC .ppi label:nth-of-type(odd){background:color-mix(in srgb,var(--pn2) 55%,transparent)}
+#dPLC .ppi label select,#dPLC .ppi label input{width:100%;min-width:0;box-sizing:border-box;margin:0}
+#dPLC .ppi .tip{padding:10px;font-size:12px;border-bottom:1px solid var(--bd2);background:#fff8dc;color:#5c4a00}
+@media (prefers-color-scheme:dark){#dPLC .ppi .tip{background:#3a3520;color:#e8d891}}
+#dPLC .ppi .tip2{padding:8px 10px;font-size:11.5px;color:var(--mu);line-height:1.5}
+#dPLC .ppi .pbt{display:flex;gap:6px;padding:8px 10px;flex-wrap:wrap}
+/* editing area */
+#dPLC .pbody,#dPLC .ptags,#dPLC .pcfgv,#dPLC .phelp{background:var(--bg)}
+@media (prefers-color-scheme:dark){#dPLC .pbody,#dPLC .ptags,#dPLC .pcfgv,#dPLC .phelp{background:#1a1f26}}
+#dPLC .pbody{padding:8px 10px 40px}
+#dPLC .rg{border:1px solid var(--bd);margin:0 0 8px;background:var(--pn)}
+#dPLC .rg.cur{border-color:var(--ac);box-shadow:0 0 0 1px var(--ac)}
+#dPLC .rg .rh{background:var(--pn3);border-bottom:1px solid var(--bd);padding:2px 6px}
+#dPLC .rg.cur .rh{background:var(--sel)}
+#dPLC .rg .rh b{color:var(--tx);font:700 11.5px "Segoe UI",Arial,sans-serif}
+#dPLC .rg .rt,#dPLC .rg>.rc{border-radius:0;font-family:"Segoe UI",Tahoma,Arial,sans-serif}
+#dPLC .rg .rh button{min-height:22px;padding:0 7px;background:transparent;border-color:transparent}
+#dPLC .rg .rh button:hover{background:var(--hov);border-color:var(--ac)}
+#dPLC .rg>.rc{border-bottom:1px solid var(--bd2);font-style:italic;font-size:11.5px}
+#dPLC .rail{stroke:var(--tx)}
+#dPLC .pi,#dPLC .ins{border-radius:0}
+#dPLC .dgh{border-radius:0;background:var(--ac2)}
+/* bottom docked window: watch table */
+#dPLC .pio-w{background:var(--pn);border-top:1px solid var(--bd)}
+#dPLC .pio-w>summary{background:var(--tb);color:#fff;padding:0 10px;min-height:24px;line-height:24px;font:700 11px/24px "Segoe UI",Arial,sans-serif;letter-spacing:.08em;border-bottom:1px solid #12181e}
+#dPLC .pio{padding:6px 10px}
+#dPLC .ioc,#dPLC .aic{border-radius:0;background:var(--pn2);border:1px solid var(--bd);color:var(--tx)}
+#dPLC .ioc.on{background:#f5c542;color:#222;border-color:#c99a10}#dPLC .ioc.q.on{background:var(--ok);color:#fff;border-color:var(--ok)}
+#dPLC .ioc.frc,#dPLC .aic.frc{outline:2px solid var(--wa);outline-offset:0}
+/* tag table, configuration, help = grid / inspector look */
+#dPLC .tgh{background:var(--pn2);border-bottom:1px solid var(--bd);padding:5px 10px}
+#dPLC .tgt{background:var(--pn);border:1px solid var(--bd2)}
+#dPLC .tgt th{background:var(--pn3);color:var(--tx);border:1px solid var(--bd2);font-size:10.5px;letter-spacing:.06em;padding:4px 8px}
+#dPLC .tgt td{border:1px solid var(--bd2);padding:1px 6px}
+#dPLC .tgt tbody tr:nth-child(even){background:var(--pn2)}#dPLC .tgt tbody tr:hover{background:var(--hov)}
+#dPLC .tgt input{border-radius:0}
+#dPLC .cfg{gap:10px;padding:10px;align-items:flex-start}
+#dPLC .cfg fieldset{border-radius:0;border:1px solid var(--bd);background:var(--pn);padding:6px 10px 8px}
+#dPLC .cfg legend{background:var(--pn3);border:1px solid var(--bd);padding:1px 8px;color:var(--tx);font-size:10.5px;letter-spacing:.08em}
+#dPLC .hlp-in{border:1px solid var(--bd);border-top:0;border-bottom:0}
+#dPLC .hlp-in h3{background:var(--pn3);color:var(--tx);border-radius:0;border-left:4px solid var(--ac);font-size:13px}
+#dPLC .hn a,#dPLC .hlp-in code,#dPLC .hx,#dPLC .hxr,#dPLC kbd{border-radius:0}
+#dPLC .hxt{background:var(--pn3);color:var(--tx)}
+#dPLC .hxtab th{background:var(--pn3)}
+/* ladder: drop zone for a parallel row, bigger drop targets */
+#dPLC .rowh{fill:none;stroke:var(--bd);stroke-width:1;stroke-dasharray:5 4;opacity:.7}
+#dPLC svg text.phx{fill:var(--mu);opacity:.8}
+#dPLC.dg-c .rowh{stroke:var(--ac);opacity:1}
+#dPLC .sl.row,#dPLC .sl.rowend{}
+#dPLC.dg-c .sl{stroke-width:1.2}
+#dPLC.dg .sl.hot{fill-opacity:.5}
+@media (max-width:900px){
+ #dPLC .pmain{flex-direction:column}
+ #dPLC .pins{width:auto;max-height:150px;border-right:0;border-bottom:1px solid var(--bd)}
+ #dPLC .pprop{width:auto;max-height:190px;border-left:0;border-top:1px solid var(--bd)}
+ #dPLC .pctr{order:0;min-height:240px}
+ #dPLC .pins .pil{display:flex;flex-wrap:wrap;align-content:flex-start}
+ #dPLC .pins .pil details,#dPLC .pins .pil .gb{display:contents}#dPLC .pins summary,#dPLC .pins .phint{display:none}
+ #dPLC .pins .pi{width:auto;flex:none;border:1px solid var(--bd2);margin:2px}
+}
+#dPLC aside::before{display:none!important;content:none!important}
+
+/* ===== v8.34 – HMI editor: full-screen engineering window like the PLC editor ===== */
+#dHMI{width:100vw;height:100dvh;max-width:100vw;max-height:100dvh;margin:0;border:0;background:var(--pn);color:var(--tx);box-shadow:none;font-size:12.5px}
+#dHMI button{border-radius:2px!important;font-size:12px;min-height:26px;padding:3px 10px;background:var(--pn2);border:1px solid var(--bd);color:var(--tx);font-weight:500}
+#dHMI button:hover:not(:disabled){background:var(--hov);border-color:var(--ac)}
+#dHMI button.pri{background:var(--ac);border-color:var(--ac2);color:#fff}#dHMI button.dn{color:var(--er)}
+#dHMI input,#dHMI select{border-radius:0!important;border:1px solid var(--bd);background:var(--pn);color:var(--tx);min-height:24px;box-shadow:inset 0 1px 1px rgba(0,0,0,.06)}
+#dHMI input:focus,#dHMI select:focus{border-color:var(--ac);box-shadow:inset 0 0 0 1px var(--ac);outline:0}
+/* title bar */
+#dHMI .hh{background:var(--tb);color:#fff;gap:2px;padding:0 4px 0 12px;min-height:32px;border-bottom:1px solid #12181e}
+#dHMI .hh b{font:700 12px "Segoe UI",Arial,sans-serif;letter-spacing:.1em;text-transform:uppercase;margin-right:12px}
+#dHMI #hdSt{background:#12171c;border:1px solid #4a5662;color:#9fb0c0;padding:3px 12px;font:600 11px "Segoe UI",Arial,sans-serif;letter-spacing:.08em;margin:0 8px 0 0;opacity:1}
+#dHMI .hh>button{background:transparent;border:1px solid transparent;color:var(--tbx);height:26px;padding:0 12px}
+#dHMI .hh>button:hover:not(:disabled){background:var(--tbh);border-color:#6a7886}
+#dHMI .hh>button[data-op=run]{background:#2e8b3d;border-color:#1f6a2c;color:#fff}#dHMI .hh>button[data-op=run]:hover{background:#37a049}
+#dHMI .hh>button[data-op=stop]{background:#b92b2b;border-color:#8c1f1f;color:#fff}#dHMI .hh>button[data-op=stop]:hover{background:#d13a3a}
+#dHMI .hh>button[data-op=close]{background:var(--tbh);border-color:#6a7886;color:#fff;font-weight:600;margin-left:6px}#dHMI .hh>button[data-op=close]:hover{background:#b92b2b;border-color:#8c1f1f}
+#dHMI .seg{border:1px solid #6a7886;border-radius:0}
+#dHMI .seg button{background:transparent;color:var(--tbx);border:0;height:26px;opacity:1;min-height:26px;padding:0 14px}
+#dHMI .seg button.on{background:var(--ac);color:#fff}#dHMI .seg button:hover:not(.on){background:var(--tbh)}
+/* body: palette | screen | properties */
+#dHMI .hb{grid-template-columns:236px minmax(0,1fr) 300px}
+#dHMI h4{margin:0;padding:0 10px;height:24px;line-height:23px;background:var(--ph);border-bottom:1px solid var(--bd);border-top:1px solid var(--bd);color:var(--tx);font:700 11px/23px "Segoe UI",Arial,sans-serif;letter-spacing:.08em;text-transform:uppercase}
+#dHMI .hpal{padding:0;gap:0;background:var(--pn);border-right:1px solid var(--bd)}
+#dHMI .hscr,#dHMI .hwid{gap:0}
+#dHMI .hscr>.hst{padding:4px 6px 0}#dHMI .hscr>.hst:last-child{padding-bottom:6px}
+#dHMI .hsl{border:0;border-bottom:1px solid var(--bd2);border-radius:0;background:var(--pn);padding:0;max-height:200px}
+#dHMI .si{border-radius:0;border:0;border-bottom:1px solid var(--bd2);padding:5px 10px}
+#dHMI .si:hover{background:var(--hov)}
+#dHMI .si.on{background:var(--sel);box-shadow:inset 3px 0 0 var(--ac);border-color:var(--bd2)}
+#dHMI .hwid button{border:0;border-bottom:1px solid var(--bd2);background:var(--pn);min-height:32px;padding:3px 10px;width:100%}
+#dHMI .hwid button:hover:not(:disabled){background:var(--hov);box-shadow:inset 3px 0 0 var(--ac)}
+#dHMI .hwid button i{color:var(--ac2);background:var(--pn2);border:1px solid var(--bd2);width:28px;height:22px;line-height:20px;font-size:13px}
+#dHMI .hsym{gap:0;grid-template-columns:1fr 1fr}
+#dHMI .hsym button{border:0;border-bottom:1px solid var(--bd2);border-right:1px solid var(--bd2);min-height:48px}
+#dHMI .hsym svg{stroke:var(--ac2)}
+@media (prefers-color-scheme:dark){#dHMI .hwid button i{color:#8fc3f0}#dHMI .hsym svg{stroke:#8fc3f0}}
+#dHMI .hcv{background:var(--bg);padding:24px}
+@media (prefers-color-scheme:dark){#dHMI .hcv{background:#1a1f26}}
+#dHMI .hcv svg{border-radius:0;box-shadow:0 0 0 1px var(--bd),0 4px 16px rgba(0,0,0,.35)}
+#dHMI.sim .hcv svg{box-shadow:0 0 0 3px var(--ok),0 4px 16px rgba(0,0,0,.35)}
+#dHMI .hz{background:var(--pn);border:1px solid var(--bd);border-radius:0;box-shadow:0 1px 3px rgba(0,0,0,.25)}
+#dHMI .hz button{background:transparent;border-color:transparent;min-height:24px}#dHMI .hz button:hover{background:var(--hov);border-color:var(--ac)}
+/* properties = inspector */
+#dHMI .hpr{padding:0;background:var(--pn);border-left:1px solid var(--bd)}
+#dHMI .hpr::before{content:"Properties";display:block;height:26px;box-sizing:border-box;padding:0 10px;background:var(--ph);border-bottom:1px solid var(--bd);font:700 11px/25px "Segoe UI",Arial,sans-serif;letter-spacing:.08em;text-transform:uppercase;position:sticky;top:0;z-index:1}
+#dHMI .hpr>*{margin-left:10px;margin-right:10px}
+#dHMI .hpr h4{margin:8px 0 0;padding:0 10px;margin-left:0;margin-right:0}
+#dHMI .hpr label{margin:0;margin-left:0;margin-right:0;padding:3px 10px;border-bottom:1px solid var(--bd2);color:var(--tx);font-size:11.5px}
+#dHMI .hpr input[type=text],#dHMI .hpr input[type=number],#dHMI .hpr select{border-radius:0;background:var(--pn);margin-top:2px;padding:2px 6px}
+#dHMI .hpr .al{border-radius:0;margin-left:10px;margin-right:10px}
+#dHMI .hw{border-radius:0}
+#dHMI .hpr .row{margin-left:10px;margin-right:10px}
+@media (max-width:820px){#dHMI .hb{grid-template-columns:1fr}#dHMI .hpal{border-right:0}}
+#dHMI .hpr p,#dHMI .hpr .mu,#dHMI .hpr small{margin-left:10px!important;margin-right:10px!important}
+
+/* inline parameters on the ladder elements */
+#dPLC .fo{display:flex;align-items:center;gap:2px;width:100%;height:100%;font:11px "Segoe UI",Arial,sans-serif;color:var(--tx)}
+#dPLC .fo select,#dPLC .fo input{min-height:0;height:100%;box-sizing:border-box;margin:0;padding:0 2px;font:600 10.5px ui-monospace,Menlo,Consolas,monospace;line-height:1;width:100%;min-width:0;border:1px solid var(--bd2);background:var(--pn);color:var(--tx);box-shadow:none;cursor:pointer;text-align:center;text-align-last:center}
+#dPLC .fo select:hover,#dPLC .fo input:hover{border-color:var(--ac)}
+#dPLC .fo select:focus,#dPLC .fo input:focus{border-color:var(--ac);box-shadow:0 0 0 1px var(--ac);outline:0;cursor:text}
+#dPLC .fo input.ft{font:italic 10px "Segoe UI",Arial,sans-serif;border-color:transparent;background:transparent;color:var(--mu);cursor:text}
+#dPLC .fo input.ft:hover,#dPLC .fo input.ft:focus{background:var(--pn);color:var(--tx);border-color:var(--ac)}
+#dPLC .fo input.ft:not(:placeholder-shown){color:var(--tx);border-color:var(--bd2);background:var(--pn2)}
+#dPLC .fo select.fo2{width:auto;flex:1}#dPLC .fo input.fv{flex:none;text-align:center;cursor:text}
+#dPLC .fo .fu{font-size:10px;color:var(--mu);flex:none}
+#dPLC .fo input[type=number]::-webkit-inner-spin-button{display:none}
+
+/* ---- v8.45 VFD programming page + drive chooser ---- */
+#dVFD{position:fixed;inset:0;width:100vw;height:100vh;max-width:none;max-height:none;margin:0;padding:0;border:0;background:var(--pn);color:var(--tx)}
+#dVFD[open]{display:flex;flex-direction:column}#dVFD::backdrop{background:#000a}
+#dVFD .vh{display:flex;align-items:center;gap:6px;background:var(--tb);color:var(--tbx);padding:4px 10px;min-height:34px}#dVFD .vh button{min-height:26px}.sp{flex:1}
+#dVFD .vm{flex:1;display:flex;min-height:0}#dVFD .vg{width:230px;border-right:1px solid var(--bd);background:var(--pn2);overflow:auto;padding:6px}
+#dVFD .vg input{width:100%;box-sizing:border-box;margin-bottom:6px}#dVFD .vg button{display:flex;justify-content:space-between;width:100%;text-align:left;margin:0 0 2px;border-color:transparent;background:transparent}
+#dVFD .vg button.on{background:var(--sel);border-color:var(--ac)}#dVFD .vg i{opacity:.6;font-style:normal}
+#dVFD .vc{flex:1;display:flex;flex-direction:column;min-width:0}#dVFD .vtb{display:flex;align-items:center;gap:8px;padding:5px 8px;border-bottom:1px solid var(--bd);background:var(--pn2)}
+#dVFD .vt{flex:1;overflow:auto}#dVFD table{border-collapse:collapse;width:100%}#dVFD th{position:sticky;top:0;background:var(--pn3);text-align:left;padding:4px 8px;border-bottom:1px solid var(--bd)}
+#dVFD td{padding:3px 8px;border-bottom:1px solid var(--bd2)}#dVFD td.pn{font-family:monospace;color:var(--ac);white-space:nowrap}#dVFD td.un,#dVFD td.fd{color:var(--mu);white-space:nowrap}
+#dVFD tr.chg td:nth-child(3){background:rgba(178,106,0,.15)}#dVFD tr.gh td{background:var(--pn2);padding:6px 8px}#dVFD td input,#dVFD td select{width:100%;min-width:90px;box-sizing:border-box}
+#dVFD .vhp{border-top:1px solid var(--bd);background:var(--pn2);padding:8px 10px;min-height:44px}
+#dVFD .vk{width:250px;border-left:1px solid var(--bd);background:var(--pn2);padding:10px;overflow:auto}
+#dVFD .lcd{background:#12301f;color:#6cf5a4;font-family:monospace;text-align:center;padding:10px 6px;border:2px solid #0b1d13}#dVFD .lcd #kHz{font-size:26px;font-weight:700}#dVFD .lcd .bad,#dVFD .bad{color:#ff6b6b}
+#dVFD .kb{display:grid;grid-template-columns:repeat(3,1fr);gap:4px;margin:8px 0}#dVFD .kb .g{background:#2b9f6b;color:#fff}#dVFD .kb .r{background:#c0392b;color:#fff}#dVFD .kinf{font-size:12px;line-height:1.6}
+#dVFDsel{border:1px solid var(--bd);background:var(--pn);color:var(--tx);max-width:760px;width:92vw;padding:16px}#dVFDsel::backdrop{background:#000a}
+#dVFDsel .vcards{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:12px}#dVFDsel .vcard{border:1px solid var(--bd);padding:10px;background:var(--pn2)}
+#dVFDsel .vcard h3{margin:0 0 4px}#dVFDsel .vcard ul{padding-left:18px;margin:6px 0}#dVFDsel .vcard button{display:block;width:100%;margin-top:6px}
+@media (max-width:760px){#dVFD .vm{flex-direction:column}#dVFD .vg,#dVFD .vk{width:auto;max-height:28vh}}
+#dVFDwiz{border:1px solid var(--bd);background:var(--pn);color:var(--tx);max-width:520px;width:92vw}#dVFDwiz::backdrop{background:#000a}#dVFDwiz .wz{display:grid;gap:6px}#dVFDwiz .wz label{display:grid;grid-template-columns:1fr 150px;gap:8px;align-items:center}#dVFDwiz .act{display:flex;justify-content:flex-end;gap:6px;margin-top:10px}
+#dHELP .tc{display:flex;border:1px solid var(--bd);margin:8px 0;background:var(--pn2)}#dHELP .tc .tn{flex:0 0 120px;background:var(--ac);color:#fff;font-weight:700;padding:10px 6px;display:flex;align-items:center;justify-content:center;text-align:center;word-break:break-word}
+#dHELP .tc .tb{padding:8px 12px;flex:1;min-width:0}#dHELP .tc p{margin:3px 0}#dHELP .tc dl{margin:4px 0 0;display:grid;grid-template-columns:110px 1fr;gap:3px 10px}#dHELP .tc dt{font-weight:700;color:var(--ac)}#dHELP .tc dd{margin:0}
+@media (max-width:640px){#dHELP .tc{flex-direction:column}#dHELP .tc .tn{flex:none}#dHELP .tc dl{grid-template-columns:1fr}}
+
+/* v8.51 – while a drawing tool is active everything under the pointer shows the cross-hair, like AutoCAD */
+#cv.drawing #svg *{cursor:crosshair!important}
+#dBK{width:min(420px,94vw)}#dBK .two{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+
+/* ---- v8.52 polish: SVG ribbon icons, branded menu link ---- */
+.ic svg{display:block;margin:auto;pointer-events:none}
+
+#menu a{display:block;padding:7px 11px;margin:2px 0;border-radius:6px;color:var(--tx);text-decoration:none;font-weight:600;font-size:12px}#menu a:hover{background:var(--pn2)}
+
+/* footer table editor */
+.tbg{display:grid;gap:3px;margin:4px 0}.tbg input{margin:0;padding:4px 5px;font-size:11.5px;min-height:30px}.tbg input.tl{font-weight:700;background:var(--pn2)}
+.tbw{display:grid;grid-template-columns:repeat(auto-fill,minmax(56px,1fr));gap:6px;margin-bottom:6px}.tbw input{margin:0}
+
+/* clickable faults */
+#msgs .m.go{cursor:pointer}#msgs .m.go:hover,#msgs .m.go:focus-visible{outline:2px solid currentColor;outline-offset:-2px}#msgs .gt{float:right;margin-left:10px;font-size:11px;font-weight:700;opacity:.85;white-space:nowrap}
+
+/* ===== v8.57 Load calculation sheet ===== */
+dialog.lc{width:min(1500px,98vw);max-width:98vw;height:min(94dvh,1000px);max-height:94dvh;padding:0;overflow:hidden;background:var(--pn);color:var(--tx)}
+dialog.lc[open]{display:flex;flex-direction:column}
+.lc-h{display:flex;align-items:center;gap:10px;padding:12px 16px;border-bottom:1px solid var(--bd);background:var(--pn2)}
+.lc-h>div{flex:1;min-width:0}.lc-h b{font-size:16px;display:block}.lc-h small{color:var(--mu);font-size:11.5px}
+.lc-c{width:34px;padding:0;font-size:15px}
+.lc-b{flex:1;min-height:0;overflow:auto;padding:10px 16px 14px}
+.lc-b h3{margin:14px 0 6px;font-size:13px}
+.lc-f{display:flex;gap:8px;align-items:center;padding:10px 16px;border-top:1px solid var(--bd);background:var(--pn2)}
+.lc button.pri{background:var(--ac);border-color:var(--ac);color:#fff}
+.lc-bs summary{font-size:13px;color:var(--tx);padding:4px 0}
+.lc-g{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:8px 12px;padding:6px 0 4px}
+.lc-g label,.lc label{display:flex;flex-direction:column;gap:3px;font-size:11.5px;font-weight:600;color:var(--mu)}
+.lc input,.lc select{background:var(--pn);color:var(--tx);border:1px solid var(--bd);border-radius:5px;padding:4px 6px;min-height:30px;font-size:12.5px;width:100%;min-width:0}
+.lc-res{display:grid;grid-template-columns:repeat(auto-fill,minmax(235px,1fr));gap:8px}
+.lc-k{border:1px solid var(--bd);border-radius:8px;background:var(--pn2);padding:8px 10px;display:flex;flex-direction:column;gap:2px;min-width:0}
+.lc-k small{font-size:10.5px;color:var(--mu);font-weight:700;letter-spacing:.03em;text-transform:uppercase}
+.lc-k b{font-size:14.5px;line-height:1.25;overflow-wrap:anywhere}.lc-k span{font-size:11.5px;color:var(--mu);overflow-wrap:anywhere}
+.lc-k.lc-w{border-color:var(--er)}.lc-k.lc-w b,.lc-k.lc-w span{color:var(--er)}
+.lc-bar{display:flex;align-items:center;gap:8px;margin-top:6px}.lc-bar h3{margin:12px 0 6px}
+.lc-tw{overflow:auto;border:1px solid var(--bd);border-radius:8px;max-height:56vh}
+.lc-t{border-collapse:separate;border-spacing:0;width:max-content;min-width:100%;font-size:12px}
+.lc-t th{position:sticky;top:0;z-index:2;background:var(--pn3);text-align:left;padding:6px 6px;font-size:11px;white-space:nowrap;border-bottom:1px solid var(--bd)}
+.lc-t th.lc-oh{background:var(--sel,#d3e3f4)}
+.lc-t td{padding:3px 4px;border-bottom:1px solid var(--bd2);vertical-align:middle}
+.lc-t td.lc-i{color:var(--mu);text-align:center;padding:3px 6px}
+.lc-t td.lc-o{background:rgba(10,94,168,.06);padding:4px 7px;min-width:70px;font-size:12px;line-height:1.3}
+.lc-t td[data-o=brk],.lc-t td[data-o=rcd],.lc-t td[data-o=iso]{min-width:165px}.lc-t td[data-o=cab]{min-width:150px}.lc-t td[data-o=rem]{min-width:230px;max-width:330px;font-size:11.5px}
+.lc-t td.lc-x{white-space:nowrap}.lc-t td.lc-x button{min-height:26px;padding:0 7px;margin-left:2px}
+.lc-t input.lc-d{min-width:150px}.lc-t input.lc-n{width:62px;text-align:right}.lc-t td:nth-child(3) select{min-width:175px}.lc-t td:nth-child(4) select{min-width:125px}.lc-t td:nth-child(7) select{min-width:66px}
+.lc-t select{min-width:76px}
+.lc-t tr.lc-wn td.lc-o{background:rgba(198,40,40,.08)}
+.lc-t td.lc-e{padding:22px;text-align:center;color:var(--mu)}
+.lc-m{color:var(--mu)}.lc-bad{color:var(--er);font-weight:700}
+.lc-note{font-size:11.5px;color:var(--mu);margin:10px 0 0;line-height:1.5}
+@media (max-width:700px){dialog.lc{width:100vw;max-width:100vw;height:100dvh;max-height:100dvh;border-radius:0}.lc-b{padding:8px 10px 12px}.lc-f{flex-wrap:wrap}}
+
+/* ---- v8.58 auto-save switch + Yes / No dialog ---- */
+#fmenu .as-hr{border:0;border-top:1px solid var(--bd);margin:4px 0}
+#fAuto .asw{min-width:38px;text-align:center;padding:1px 8px;border-radius:10px;font-size:11px;font-weight:700;background:#9aa6b2;color:#fff}
+#fAuto.on .asw{background:var(--ok)}
+#fAutoT{padding:2px 10px 6px;font-size:11px;color:var(--mu);line-height:1.35;max-width:240px}
+dialog.as-dlg{border:1px solid var(--bd);border-radius:10px;padding:0;background:var(--pn);color:var(--tx);box-shadow:0 12px 40px rgba(0,0,0,.4);max-width:min(92vw,400px)}
+dialog.as-dlg::backdrop{background:rgba(10,20,30,.45)}
+dialog.as-dlg form{padding:18px 20px 14px}
+dialog.as-dlg h3{margin:0 0 8px;font-size:16px}
+dialog.as-dlg p{margin:0 0 16px;font-size:13.5px;line-height:1.5;color:var(--mu)}
+.as-b{display:flex;justify-content:flex-end;gap:10px}
+.as-b button{min-width:96px;padding:7px 14px;border-radius:6px;border:1px solid var(--bd);background:var(--pn2);color:var(--tx);font-weight:600;cursor:pointer}
+.as-b .as-yes{background:var(--ac);border-color:var(--ac);color:#fff}
+
+/* ---- v8.58 left 3-bar file menu ---- */
+#lmenu{display:none;position:fixed;z-index:70;min-width:250px;background:var(--pn);border:1px solid var(--bd);border-radius:8px;padding:4px;box-shadow:0 8px 24px rgba(0,0,0,.3);color:var(--tx)}
+#lmenu.open{display:block}
+#lmenu .lm-h{padding:4px 10px;font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--mu)}
+#lmenu button{display:flex;justify-content:space-between;align-items:center;gap:14px;width:100%;min-height:28px;margin:1px 0;padding:4px 10px;border:0;border-radius:5px;background:transparent;color:var(--tx);text-align:left;font-weight:400;cursor:pointer}
+#lmenu button:hover{background:var(--sel,var(--pn2))}
+#lmenu kbd{font:11px system-ui;color:var(--mu)}
+#lmenu #fName{padding:3px 10px 5px;font-size:11px;color:var(--mu);border-bottom:1px solid var(--bd);margin-bottom:3px;word-break:break-all}#lmenu #fName:empty{display:none}
+
+/* ===== v8.62 Modbus RTU: register table in Properties + Frame Viewer ===== */
+.mbt{width:100%;border-collapse:collapse;margin:4px 0}.mbt th{font-size:10.5px;text-align:left;color:var(--mu);font-weight:600}.mbt td{padding:1px 2px}.mbt input{margin:0;padding:3px 4px;min-height:28px;font-size:12px;width:100%}.mbt .x{width:26px;padding:0;min-height:26px}
+.mbv svg{width:100%;height:auto;background:var(--pn2);border:1px solid var(--bd);border-radius:8px}.mbv h3{margin:12px 0 4px;font-size:13px}
+.mbr{margin:10px 0 2px}.mbr>b{font-size:12.5px}.mbf{display:flex;flex-wrap:wrap;gap:6px;margin:4px 0}
+.mbg{border:2px solid var(--c);border-radius:6px;padding:0 3px 3px;background:var(--pn)}.mbl{display:block;font-size:10px;font-weight:700;color:var(--c);text-align:center;padding:1px 2px;white-space:nowrap}.mbb{display:flex;gap:2px}
+.mbc{display:flex;flex-direction:column;align-items:center;min-width:34px;padding:3px 2px;border-radius:4px;background:var(--c);color:#fff;font:700 15px ui-monospace,Consolas,monospace}.mbc small{font:9px system-ui,sans-serif;opacity:.85;min-height:10px}
+.mbc.s0{background:var(--bd);opacity:.4}.mbc.s1{opacity:.55}.mbc.bad{background:#e03131;outline:2px dashed #fff;outline-offset:-3px}
+.mbk{font-size:12.5px;margin:4px 0}.mbs{font-size:12px;margin:4px 0;display:flex;flex-wrap:wrap;gap:4px 12px}.mbs span{white-space:nowrap}.mbm{margin:3px 0 6px;font-size:13.5px;line-height:1.5}
+.lg{display:inline-block;border:2px solid var(--c);color:var(--c);border-radius:5px;padding:0 5px;font-size:11px;font-weight:700}
+.mbrg{display:flex;flex-wrap:wrap;gap:4px 8px;font-size:12px}.mbrg span{border:1px solid var(--bd);border-radius:5px;padding:2px 6px;background:var(--pn)}.mbrg .hit{background:rgba(61,220,151,.22);border-color:var(--ok)}.mbrg i{color:var(--mu);font-style:normal}
+.mbh{border-collapse:collapse;width:100%;font-size:12px}.mbh th{text-align:left;background:var(--pn2);padding:3px 8px;border:1px solid var(--bd)}.mbh td{padding:3px 8px;border:1px solid var(--bd)}.mbh tr[data-hi]{cursor:pointer}.mbh tr[data-hi]:hover,.mbh tr.cur{background:var(--pn2)}
+.mbv .lc-f{flex-wrap:wrap}.mbv .lc-f select{margin:0 4px}
+.mbv .lc-f label{display:flex;align-items:center;gap:5px;margin:0;font-size:12px;white-space:nowrap}.mbv .lc-f input[type=checkbox]{width:auto;min-height:0;margin:0}.mbv .lc-f select{width:auto;min-height:30px}
+
+/* v8.63 Modbus Register Map editor */
+.mbe input[data-f=a]{width:78px}.mbe input[data-f=n]{min-width:190px}.mbe input[data-f=v]{width:96px}.mbe input[data-f=sc]{width:74px}.mbe input[data-f=u]{width:64px}.mbe .lc-t td select{min-width:140px}.mbe .lc-t td.lc-o{text-align:right;font-variant-numeric:tabular-nums}.mbe .lc-t td.lc-m{font-size:11px;white-space:nowrap}
+
+/* v8.65 – Serial Viewer (RS232 / RS422) */
+dialog.sxv .sxvr{display:flex;gap:14px;flex-wrap:wrap;margin:2px 0 8px}dialog.sxv .sxvr label{min-width:230px;flex:1}
+#sxvW svg{width:100%;height:auto;max-height:60vh;background:var(--pn2);border:1px solid var(--bd);border-radius:8px;display:block}
+#sxvI table{border-collapse:collapse;font-size:12.5px;margin:8px 0}#sxvI th,#sxvI td{border:1px solid var(--bd);padding:4px 9px;text-align:left}#sxvI tr.sxd td{color:var(--er);font-weight:700}
+.sxvk{border:1px solid var(--bd);border-radius:8px;padding:8px 11px;margin:8px 0;font-size:13px;line-height:1.5;background:var(--pn2)}.sxvk.ok{border-color:var(--ok)}.sxvk.er{border-color:var(--er)}.sxvk ul{margin:4px 0 0 18px;padding:0}
+
+/* ===== v8.68: multi-select bar label, easy page switching ===== */
+#msN{display:none}
+#sbar[data-k=m] #msN{display:inline-flex;align-items:center;padding:0 10px;font-weight:600;font-size:12px;white-space:nowrap}
+#sbar[data-k=m] [data-a=edit],#sbar[data-k=m] .hp{display:none}
+nav#pages #pgPrev,nav#pages #pgNext{padding:0 12px;font-size:14px;background:var(--pn);font-weight:600;margin:0}
+nav#pages #pgPrev:disabled,nav#pages #pgNext:disabled{opacity:.35;cursor:default}
+nav#pages #pgNo{align-self:center;padding:0 10px;font-size:12px;font-weight:600;white-space:nowrap;min-width:48px;text-align:center}
+nav#pages #pgs{overflow-x:auto;scrollbar-width:none}nav#pages #pgs::-webkit-scrollbar{display:none}
+#pgFloat{display:none;position:absolute;left:10px;top:10px;z-index:6;align-items:stretch;background:var(--pn);border:1px solid var(--bd);box-shadow:0 2px 8px rgba(0,0,0,.2)}
+#pgFloat button{min-height:30px;padding:0 12px;border:0;background:var(--pn);font-size:14px}
+#pgFloat button:disabled{opacity:.35}
+#pgFloat span{align-self:center;padding:0 8px;font-size:12px;font-weight:600;white-space:nowrap}
+body.hp #pgFloat:not(.one){display:flex}
+/* the "▴ Results" / "▴ Sheet tabs" buttons were hidden behind the command bar – lift them above it */
+#rest{bottom:50px}
+@media (max-width:760px){#rest{bottom:86px}}
