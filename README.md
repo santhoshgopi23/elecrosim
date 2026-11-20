@@ -8,7 +8,7 @@ The landing page is `index.html`; the editor is `app.html`. Open `index.html`, o
 ## v8.76 – Launch preparation
 - **Licence** changed from MIT to proprietary (all rights reserved).
 - **Landing page:** new "ElectroSim Pro is coming" section with a waitlist form (email, role, fair yearly price); nav and footer links; `legal.html` (Privacy & Terms, template – set your contact email).
-- **Hosting files:** `functions/api/waitlist.js` (stores the list in Cloudflare KV, binding `WAITLIST`), `_headers` (HTTPS and security headers, no-cache for `sw.js` and the HTML pages), `DEPLOY.md` (step-by-step Cloudflare Pages setup). The editor itself is unchanged.
+- **Hosting files:** `worker.js` + `wrangler.jsonc` + `.assetsignore` (Cloudflare Workers static assets; `/api/waitlist` stores the list in KV, binding `WAITLIST`), `_headers` (HTTPS and security headers, no-cache for `sw.js` and the HTML pages), `DEPLOY.md` (step-by-step Cloudflare Pages setup). The editor itself is unchanged.
 
 ## v8.75 – Presets (Simulation tab → Presets)
 - **Save preset** stores your current look and sound under a name (for example "Training" or "Presentation"); a **button for each preset** appears in the group – one click switches everything. The preset that matches the current settings is highlighted; change any control and the highlight goes out. **Delete preset** removes the highlighted one. Saving with an existing name asks before replacing it. Up to 12 presets, names up to 24 characters.
